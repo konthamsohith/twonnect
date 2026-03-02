@@ -1,0 +1,90 @@
+.dump-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: 4rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.dump-content {
+    margin-top: 3rem;
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.5;
+}
+
+.mb-4 {
+    margin-bottom: 2rem;
+}
+
+.text-muted {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px dashed var(--border-color);
+    text-align: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 99, 33, 0.2);
+    border-top-color: var(--primary);
+    border-radius: 50px;
+    animation: spin 1s infinite linear;
+    margin-bottom: 1.5rem;
+}
+
+.ai-feedback-card {
+    border-color: rgba(255, 99, 33, 0.4);
+    background: linear-gradient(180deg, rgba(255, 99, 33, 0.05) 0%, rgba(245, 244, 243, 0.05) 100%);
+}
+
+.ai-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.ai-header h3 {
+    margin: 0;
+    color: var(--primary);
+}
+
+.ai-icon {
+    font-size: 1.5rem;
+}
+
+.ai-feedback-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

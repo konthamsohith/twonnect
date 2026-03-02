@@ -1,0 +1,129 @@
+.problem-details-page {
+    padding-top: 2rem;
+}
+
+.problem-header {
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem;
+}
+
+.problem-header h1 {
+    font-size: 3rem;
+    margin: 1rem 0;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.meta-pills {
+    display: flex;
+    gap: 1rem;
+}
+
+.category-pill {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-pill {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.author-details {
+    color: var(--muted);
+    font-size: 1rem;
+}
+
+.problem-content-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+}
+
+.problem-description h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.description-text {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #ddd;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 3rem 0 1.5rem;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.solutions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.solution-card {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.solution-meta h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.builder-name {
+    font-size: 0.9rem;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.side-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.ai-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 1.5rem;
+}
+
+.engagement-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.engagement-stats .stat {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+@media (max-width: 900px) {
+    .problem-content-layout {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,115 @@
+.investors-page {
+    padding-top: 4rem;
+}
+
+.metrics-overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.metric-box {
+    background: linear-gradient(135deg, rgba(6, 6, 18, 0.8) 0%, rgba(20, 20, 30, 0.8) 100%);
+    border: 1px solid rgba(255, 99, 33, 0.2);
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.metric-box h3 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+}
+
+.metric-box p {
+    color: var(--muted);
+    margin: 0;
+    font-weight: 500;
+}
+
+.startups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.border-glow {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.border-glow:hover {
+    border-color: rgba(255, 99, 33, 0.5);
+    box-shadow: 0 0 30px rgba(255, 99, 33, 0.15);
+    transform: translateY(-5px);
+}
+
+.startup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.startup-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.stage-badge {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+}
+
+.stage-idea {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.stage-prototype {
+    background: rgba(52, 152, 219, 0.2);
+    color: #3498db;
+}
+
+.stage-mvp {
+    background: rgba(155, 89, 182, 0.2);
+    color: #9b59b6;
+}
+
+.stage-revenue {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+}
+
+.tagline {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #ddd;
+    margin-bottom: 1.5rem;
+}
+
+.traction-box {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--primary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.funding-tag {
+    color: #f1c40f;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .metrics-overview {
+        grid-template-columns: 1fr;
+    }
+}

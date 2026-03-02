@@ -1,0 +1,94 @@
+.builders-page {
+    padding-top: 4rem;
+}
+
+.builders-page .page-header {
+    margin-bottom: 4rem;
+}
+
+.builders-page h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.builders-page .header-actions {
+    margin-top: 2rem;
+}
+
+.builders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.builder-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.builder-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar-placeholder {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 99, 33, 0.8) 0%, rgba(200, 50, 20, 0.8) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.builder-header h3 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.2rem;
+}
+
+.role-badge {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-right: 0.5rem;
+}
+
+.availability-badge {
+    font-size: 0.75rem;
+    background: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.bio {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #ddd;
+    margin-bottom: 1.5rem;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+.stats {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-weight: 500;
+}

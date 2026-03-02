@@ -1,0 +1,112 @@
+.explore-page .page-header {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.explore-page .header-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.explore-page .header-content p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 600px;
+}
+
+.search-section {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 3rem;
+}
+
+.search-section .filters {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.problems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.problem-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.problem-card h3 {
+    margin: 0.5rem 0 0;
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+.card-top-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.category-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-indicator {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+}
+
+.status-open {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+}
+
+.status-in-progress {
+    background: rgba(241, 196, 15, 0.2);
+    color: #f1c40f;
+}
+
+.meta-info span {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-right: 1rem;
+}
+
+.author-info {
+    font-size: 0.85rem;
+    color: #aaa;
+}
+
+.role-tag {
+    background: rgba(255, 99, 33, 0.2);
+    color: var(--primary);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    margin-left: 0.3rem;
+    font-size: 0.75rem;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem;
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px dashed var(--border-color);
+}
