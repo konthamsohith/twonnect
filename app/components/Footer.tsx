@@ -86,8 +86,7 @@ export default function Footer() {
 
             {/* ── Bottom bar ──────────────────────────────── */}
             <div className="ip-footer-bottom">
-                <span>Design &amp; Developed by <strong>Sohith</strong></span>
-                <span className="ip-footer-copy">&copy; Copyright Idea Platform {new Date().getFullYear()}.</span>
+                <span className="ip-footer-copy">&copy; Copyright Idea Platform {new Date().getFullYear()}. All rights reserved.</span>
             </div>
         </footer>
     );
