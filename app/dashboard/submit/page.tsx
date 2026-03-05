@@ -18,14 +18,34 @@ export default function SubmitIdeaPage() {
     const [impact, setImpact] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // Simulate submission
-        setTimeout(() => {
+
+        const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+
+        try {
+            const response = await fetch(`${apiURL}/api/ideas`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ title, description, impact }),
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log("Submission success:", result);
+                setIsSubmitting(false);
+                router.push("/dashboard/ideas");
+            } else {
+                throw new Error("Failed to submit idea");
+            }
+        } catch (error) {
+            console.error("Submission error:", error);
             setIsSubmitting(false);
-            router.push("/dashboard/ideas");
-        }, 1500);
+            alert("Submission failed. Please check if the backend is running.");
+        }
     };
 
     return (
