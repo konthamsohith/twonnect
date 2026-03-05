@@ -100,7 +100,7 @@ export default function DashboardLayout({
                         </Link>
                     ))}
 
-                    <div style={{ margin: "2rem 0 1rem", fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", paddingLeft: "1rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                    <div style={{ margin: "1.25rem 0 0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", paddingLeft: "1rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                         Management
                     </div>
 
