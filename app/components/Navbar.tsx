@@ -40,7 +40,7 @@ export default function Navbar() {
 
             <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
                 <div className="navbar-container">
-                    <Link href="/" className="navbar-logo">
+                    <Link href={user ? "/dashboard" : "/"} className="navbar-logo">
                         <Logo />
                     </Link>
                     <div className="navbar-links">

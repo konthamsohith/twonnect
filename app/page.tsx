@@ -1,4 +1,9 @@
+"use client";
+
+import React, { useEffect } from "react";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 import HeroBg from "./components/HeroBg";
 import FeaturedProblems from "./components/FeaturedProblems";
 import WhyBuild from "./components/WhyBuild";
@@ -6,18 +11,30 @@ import Testimonials from "./components/Testimonials";
 import FAQSection from "./components/FAQ";
 
 export default function Home() {
+    const { user, loading } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!loading && user) {
+            router.push("/dashboard");
+        }
+    }, [user, loading, router]);
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "TWONNECT",
-        "url": "https://twonnect.com",
-        "logo": "https://twonnect.com/assests/TWONNECTcircle.png",
+        "url": "https://twonnect.me",
+        "logo": "https://twonnect.me/assests/TWONNECTcircle.png",
         "description": "Connecting early-stage startup founders with validated problem statements and angel investors to build Y Combinator-ready companies.",
         "sameAs": [
             "https://twitter.com/twonnect",
             "https://linkedin.com/company/twonnect"
         ]
     };
+
+    if (loading || user) {
+        return <div style={{ minHeight: "100vh", background: "#050505" }} />;
+    }
 
     return (
         <main className="avanza-home">

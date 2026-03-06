@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: ['/dashboard/', '/api/'],
         },
-        sitemap: 'https://twonnect.com/sitemap.xml',
+        sitemap: 'https://twonnect.me/sitemap.xml',
     };
 }

@@ -127,7 +127,7 @@ export default function SettingsPage() {
                                 <button className="btn-outline" onClick={() => router.push("/dashboard/help")} style={{ borderRadius: "6px", fontSize: "0.9rem", flex: 1, padding: "0.75rem", fontWeight: 600, background: "#ffffff", border: "1px solid #e2e8f0" }}>
                                     Knowledge Base
                                 </button>
-                                <button className="btn-outline" onClick={() => window.open("mailto:support@twonnect.com")} style={{ borderRadius: "6px", fontSize: "0.9rem", flex: 1, padding: "0.75rem", fontWeight: 600, background: "#ffffff", border: "1px solid #e2e8f0" }}>
+                                <button className="btn-outline" onClick={() => window.open("mailto:support@twonnect.me")} style={{ borderRadius: "6px", fontSize: "0.9rem", flex: 1, padding: "0.75rem", fontWeight: 600, background: "#ffffff", border: "1px solid #e2e8f0" }}>
                                     External Support
                                 </button>
                             </div>

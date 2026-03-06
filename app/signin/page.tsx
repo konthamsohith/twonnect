@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import Logo from "../components/Logo";
 
 export default function SignIn() {
     const { loginWithGoogle, signInWithEmail, user } = useAuth();
@@ -46,8 +47,7 @@ export default function SignIn() {
                 <div className="auth-card">
                     <div className="auth-header">
                         <Link href="/" className="auth-logo">
-                            <span style={{ color: "var(--blue)" }}>Idea</span>
-                            <span style={{ color: "var(--foreground)" }}>Platform</span>
+                            <Logo />
                         </Link>
                         <h1>Welcome Back</h1>
                         <p>Join the community of builders, idea givers, and investors.</p>

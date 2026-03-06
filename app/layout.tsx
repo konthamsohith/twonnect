@@ -16,14 +16,14 @@ export const metadata = {
         address: false,
         telephone: false,
     },
-    metadataBase: new URL("https://twonnect.com"), // Replace with actual production URL if different
+    metadataBase: new URL("https://twonnect.me"), // Replace with actual production URL if different
     alternates: {
         canonical: "/",
     },
     openGraph: {
         title: "TWONNECT | Bridging Real-World Problems with Startup Solutions",
         description: "The platform where real-world problems meet actionable startup solutions. Connect with builders and investors.",
-        url: "https://twonnect.com",
+        url: "https://twonnect.me",
         siteName: "TWONNECT",
         images: [
             {
