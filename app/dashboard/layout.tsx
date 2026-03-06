@@ -33,7 +33,6 @@ const IconAccount = () => (
 const IconLogout = () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
 );
-import { UserProfile, Idea } from "@/lib/firestore";
 import Logo from "../components/Logo";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -46,9 +45,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         router.push("/");
     };
 
-    const userInitials = user?.displayName
-        ? user.displayName.split(' ').map(n => n[0]).join('').toUpperCase()
-        : (user?.email ? user.email[0].toUpperCase() : 'U');
+    const fullName = user?.user_metadata?.full_name || user?.email || "User";
+    const avatarUrl = user?.user_metadata?.avatar_url;
+
+    const userInitials = fullName
+        .split(' ')
+        .map(n => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2);
 
     const navItems = [
         { name: "Marketplace", href: "/dashboard", icon: <IconMarketplace /> },
@@ -107,13 +112,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <div className="sidebar-footer">
                     <div className="sidebar-user-container">
                         <div className="sidebar-user">
-                            {user?.photoURL ? (
-                                <img src={user.photoURL} alt="" className="user-avatar" />
+                            {avatarUrl && avatarUrl !== "" ? (
+                                <img src={avatarUrl} alt="" className="user-avatar" />
                             ) : (
                                 <div className="user-avatar initials-avatar">{userInitials}</div>
                             )}
                             <div className="user-info">
-                                <span className="user-name">{user?.displayName || "User"}</span>
+                                <span className="user-name">{fullName}</span>
                                 <span className="user-email" title={user?.email || ""}>{user?.email}</span>
                             </div>
                         </div>

@@ -1,13 +1,17 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function SignIn() {
-    const { loginWithGoogle, user } = useAuth();
+    const { loginWithGoogle, signInWithEmail, user } = useAuth();
     const router = useRouter();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -17,6 +21,21 @@ export default function SignIn() {
 
     const handleGoogleLogin = async () => {
         await loginWithGoogle();
+    };
+
+    const handleEmailLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError(null);
+        setLoading(true);
+        try {
+            const { error } = await signInWithEmail(email, password);
+            if (error) throw error;
+            router.push("/dashboard");
+        } catch (err: any) {
+            setError(err.message || "Failed to sign in. Please check your credentials.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     if (user) return null;
@@ -49,17 +68,33 @@ export default function SignIn() {
                             <span>or continue with email</span>
                         </div>
 
-                        <div className="auth-form">
+                        {error && <div style={{ color: "red", fontSize: "0.85rem", marginBottom: "1rem", textAlign: "center" }}>{error}</div>}
+
+                        <form className="auth-form" onSubmit={handleEmailLogin}>
                             <div className="input-group">
                                 <label>Email address</label>
-                                <input type="email" placeholder="name@company.com" />
+                                <input
+                                    type="email"
+                                    placeholder="name@company.com"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
                             </div>
                             <div className="input-group">
                                 <label>Password</label>
-                                <input type="password" placeholder="••••••••" />
+                                <input
+                                    type="password"
+                                    placeholder="••••••••"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
                             </div>
-                            <button className="btn-black btn-full">Sign In</button>
-                        </div>
+                            <button className="btn-black btn-full" disabled={loading}>
+                                {loading ? "Signing in..." : "Sign In"}
+                            </button>
+                        </form>
                     </div>
 
                     <div className="auth-footer">

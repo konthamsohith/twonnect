@@ -51,7 +51,30 @@ export default function Navbar() {
                     <div className="navbar-actions">
                         {user ? (
                             <div className="nav-user-profile">
-                                <img src={user.photoURL || ""} alt={user.displayName || ""} className="nav-avatar" />
+                                {user.user_metadata?.avatar_url ? (
+                                    <img
+                                        src={user.user_metadata.avatar_url}
+                                        alt={user.user_metadata.full_name || ""}
+                                        className="nav-avatar"
+                                    />
+                                ) : (
+                                    <div className="nav-avatar initials-avatar" style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        background: "var(--blue)",
+                                        color: "white",
+                                        fontSize: "0.8rem",
+                                        fontWeight: "600"
+                                    }}>
+                                        {(user.user_metadata?.full_name || user.email || "U")
+                                            .split(' ')
+                                            .map((n: string) => n[0])
+                                            .join('')
+                                            .toUpperCase()
+                                            .slice(0, 2)}
+                                    </div>
+                                )}
                                 <button className="btn-ghost" onClick={handleLogout}>Sign Out</button>
                             </div>
                         ) : (

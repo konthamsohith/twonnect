@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { getAllIdeas, Idea } from "@/lib/firestore";
+import { getAllIdeas, Idea } from "@/lib/supabase-db";
 
 // ── Premium SVG Icons ──────────────────────────────────────────
 const IconPlus = () => (
@@ -39,7 +39,7 @@ export default function DashboardPage() {
         fetchMarketplace();
     }, []);
 
-    const userIdeasCount = ideas.filter(i => i.authorId === user?.uid).length;
+    const userIdeasCount = ideas.filter(i => i.author_id === user?.id).length;
 
     const stats = [
         { title: "Problems Dumped", value: ideas.length.toString(), icon: <IconList /> },

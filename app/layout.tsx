@@ -4,6 +4,9 @@ import "./landing.css";
 export const metadata = {
     title: "TWONNECT",
     description: "A platform bridging real-world problems with actionable startup solutions.",
+    icons: {
+        icon: "/assests/TWONNECTcircle.png",
+    },
 };
 
 import Navbar from "./components/Navbar";

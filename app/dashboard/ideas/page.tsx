@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-import { getUserIdeas, Idea } from "@/lib/firestore";
+import { getUserIdeas, Idea } from "@/lib/supabase-db";
 
 const IconSparkles = () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.912 5.813h6.111l-4.943 3.591 1.887 5.85L12 14.663l-4.967 3.591 1.887-5.85-4.943-3.591h6.111L12 3z" /></svg>
@@ -16,8 +16,8 @@ export default function MyIdeasPage() {
 
     useEffect(() => {
         async function fetchIdeas() {
-            if (user) {
-                const userIdeas = await getUserIdeas(user.uid);
+            if (user?.id) {
+                const userIdeas = await getUserIdeas(user.id);
                 setIdeas(userIdeas);
             }
             setLoading(false);

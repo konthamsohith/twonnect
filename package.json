@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
-    "firebase": "^12.10.0",
+    "@supabase/supabase-js": "^2.98.0",
     "framer-motion": "^12.34.4",
     "next": "^16.1.6",
     "react": "^19.0.0",

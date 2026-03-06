@@ -1,12 +1,44 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { getUserProfile, updateUserProfile, Profile } from "@/lib/supabase-db";
 
 export default function SettingsPage() {
     const { user, logout } = useAuth();
     const router = useRouter();
+    const [profile, setProfile] = useState<Profile | null>(null);
+    const [displayName, setDisplayName] = useState("");
+    const [isSaving, setIsSaving] = useState(false);
+    const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+    useEffect(() => {
+        async function loadProfile() {
+            if (user?.id) {
+                const data = await getUserProfile(user.id);
+                if (data) {
+                    setProfile(data);
+                    setDisplayName(data.display_name || "");
+                }
+            }
+        }
+        loadProfile();
+    }, [user]);
+
+    const handleSave = async () => {
+        if (!user?.id) return;
+        setIsSaving(true);
+        setMessage(null);
+        try {
+            await updateUserProfile(user.id, { display_name: displayName });
+            setMessage({ type: "success", text: "Profile updated successfully." });
+        } catch (error) {
+            setMessage({ type: "error", text: "Failed to update profile. Please try again." });
+        } finally {
+            setIsSaving(false);
+        }
+    };
 
     const handleLogout = async () => {
         await logout();
@@ -31,13 +63,28 @@ export default function SettingsPage() {
                     </div>
 
                     <div className="card" style={{ border: "1px solid #e2e8f0", background: "#ffffff", boxShadow: "0 1px 2px rgba(0,0,0,0.05)", padding: "2.5rem", borderRadius: "8px" }}>
+                        {message && (
+                            <div style={{
+                                padding: "1rem",
+                                borderRadius: "6px",
+                                marginBottom: "2rem",
+                                fontSize: "0.9rem",
+                                background: message.type === "success" ? "#f0fdf4" : "#fef2f2",
+                                color: message.type === "success" ? "#166534" : "#991b1b",
+                                border: `1px solid ${message.type === "success" ? "#bbf7d0" : "#fecaca"}`
+                            }}>
+                                {message.text}
+                            </div>
+                        )}
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem" }}>
                             <div className="input-wrapper">
                                 <label className="input-label" style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.06em", color: "#475569", fontWeight: 700, marginBottom: "0.75rem" }}>Full Name</label>
                                 <input
                                     type="text"
                                     className="base-input"
-                                    defaultValue="Kontham sohith"
+                                    value={displayName}
+                                    onChange={(e) => setDisplayName(e.target.value)}
+                                    placeholder="Enter your name"
                                     style={{ borderColor: "#cbd5e1", borderRadius: "6px", width: "100%", padding: "0.875rem" }}
                                 />
                             </div>
@@ -46,15 +93,20 @@ export default function SettingsPage() {
                                 <input
                                     type="email"
                                     className="base-input"
-                                    defaultValue="sohithkontham5@gmail.com"
+                                    value={user?.email || ""}
                                     disabled
                                     style={{ background: "#f1f5f9", borderColor: "#e2e8f0", color: "#64748b", borderRadius: "6px", width: "100%", cursor: "not-allowed", padding: "0.875rem" }}
                                 />
                             </div>
                         </div>
                         <div style={{ marginTop: "3rem", display: "flex", justifyContent: "flex-end" }}>
-                            <button className="btn-blue" style={{ borderRadius: "6px", padding: "0.75rem 2.5rem", fontSize: "0.95rem", fontWeight: 600, boxShadow: "0 1px 2px rgba(0, 122, 255, 0.2)" }}>
-                                Save Profile Changes
+                            <button
+                                onClick={handleSave}
+                                className="btn-blue"
+                                disabled={isSaving}
+                                style={{ borderRadius: "6px", padding: "0.75rem 2.5rem", fontSize: "0.95rem", fontWeight: 600, boxShadow: "0 1px 2px rgba(0, 122, 255, 0.2)", opacity: isSaving ? 0.7 : 1 }}
+                            >
+                                {isSaving ? "Saving..." : "Save Profile Changes"}
                             </button>
                         </div>
                     </div>

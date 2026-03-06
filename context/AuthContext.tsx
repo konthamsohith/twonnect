@@ -1,19 +1,15 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {
-    onAuthStateChanged,
-    signInWithPopup,
-    signOut,
-    User
-} from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase";
-import { syncUserToFirestore } from "@/lib/firestore";
+import { User } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
 
 interface AuthContextType {
     user: User | null;
     loading: boolean;
     loginWithGoogle: () => Promise<void>;
+    signInWithEmail: (email: string, password: string) => Promise<{ error: any }>;
+    signUpWithEmail: (email: string, password: string, fullName: string) => Promise<{ error: any }>;
     logout: () => Promise<void>;
 }
 
@@ -24,35 +20,72 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            setUser(currentUser);
+        // Check active sessions and sets the user
+        const setData = async () => {
+            const { data: { session }, error } = await supabase.auth.getSession();
+            if (error) throw error;
+            setUser(session?.user ?? null);
             setLoading(false);
-            if (currentUser) {
-                await syncUserToFirestore(currentUser);
-            }
+        };
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+            setLoading(false);
         });
 
-        return () => unsubscribe();
+        setData();
+
+        return () => {
+            subscription.unsubscribe();
+        };
     }, []);
 
     const loginWithGoogle = async () => {
         try {
-            await signInWithPopup(auth, googleProvider);
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin + "/dashboard"
+                }
+            });
+            if (error) throw error;
         } catch (error) {
             console.error("Login failed:", error);
         }
     };
 
+    const signInWithEmail = async (email: string, password: string) => {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
+        return { error };
+    };
+
+    const signUpWithEmail = async (email: string, password: string, fullName: string) => {
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    full_name: fullName,
+                }
+            }
+        });
+        return { error };
+    };
+
     const logout = async () => {
         try {
-            await signOut(auth);
+            const { error } = await supabase.auth.signOut();
+            if (error) throw error;
         } catch (error) {
             console.error("Logout failed:", error);
         }
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, loginWithGoogle, logout }}>
+        <AuthContext.Provider value={{ user, loading, loginWithGoogle, signInWithEmail, signUpWithEmail, logout }}>
             {!loading && children}
         </AuthContext.Provider>
     );
