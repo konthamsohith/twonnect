@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { Twitter, Linkedin, Github } from "lucide-react";
 
 // Fallback SVGs since lucide-react might not be installed, using explicit SVGs
 const TwitterIcon = () => (
