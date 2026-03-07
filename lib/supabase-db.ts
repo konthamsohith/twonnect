@@ -87,13 +87,19 @@ export const createIdea = async (ideaData: Omit<Idea, "id" | "created_at" | "col
 /**
  * Fetches all ideas for the marketplace.
  */
-export const getAllIdeas = async () => {
+export const getAllIdeas = async (limit?: number) => {
     if (!supabase) return [];
     try {
-        const { data, error } = await supabase
+        let query = supabase
             .from("ideas")
             .select("*")
             .order("created_at", { ascending: false });
+
+        if (limit) {
+            query = query.limit(limit);
+        }
+
+        const { data, error } = await query;
 
         if (error) throw error;
         return data as Idea[];
@@ -119,6 +125,61 @@ export const getUserIdeas = async (uid: string) => {
         return data as Idea[];
     } catch (error) {
         console.error("Error fetching user ideas:", JSON.stringify(error, null, 2));
+        return [];
+    }
+};
+
+/**
+ * Updates an existing idea.
+ */
+export const updateIdea = async (id: string, ideaData: Partial<Idea>) => {
+    if (!supabase) throw new Error("Supabase not initialized");
+    try {
+        const { error } = await supabase
+            .from("ideas")
+            .update(ideaData)
+            .eq("id", id);
+
+        if (error) throw error;
+    } catch (error) {
+        console.error("Error updating idea:", JSON.stringify(error, null, 2));
+        throw error;
+    }
+};
+
+/**
+ * Deletes an idea.
+ */
+export const deleteIdea = async (id: string) => {
+    if (!supabase) throw new Error("Supabase not initialized");
+    try {
+        const { error } = await supabase
+            .from("ideas")
+            .delete()
+            .eq("id", id);
+
+        if (error) throw error;
+    } catch (error) {
+        console.error("Error deleting idea:", JSON.stringify(error, null, 2));
+        throw error;
+    }
+};
+/**
+ * Fetches all ideas marked as 'Collaborative'.
+ */
+export const getCollaborativeIdeas = async () => {
+    if (!supabase) return [];
+    try {
+        const { data, error } = await supabase
+            .from("ideas")
+            .select("*")
+            .eq("status", "Collaborative")
+            .order("created_at", { ascending: false });
+
+        if (error) throw error;
+        return data as Idea[];
+    } catch (error) {
+        console.error("Error fetching collaborative ideas:", JSON.stringify(error, null, 2));
         return [];
     }
 };

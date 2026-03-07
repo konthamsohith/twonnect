@@ -22,14 +22,14 @@ const IconRocket = () => (
 );
 
 export default function DashboardPage() {
-    const { user } = useAuth();
+    const { user, loading: authLoading } = useAuth();
     const [ideas, setIdeas] = useState<Idea[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchMarketplace() {
             try {
-                const allIdeas = await getAllIdeas();
+                const allIdeas = await getAllIdeas(6);
                 setIdeas(allIdeas);
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
@@ -42,8 +42,8 @@ export default function DashboardPage() {
     const userIdeasCount = ideas.filter(i => i.author_id === user?.id).length;
 
     const stats = [
-        { title: "Total Ideas", value: ideas.length.toString(), icon: <IconList /> },
-        { title: "Your Contributions", value: userIdeasCount.toString(), icon: <IconCollab /> },
+        { title: "Total Ideas", value: (loading || authLoading) ? "..." : ideas.length.toString(), icon: <IconList /> },
+        { title: "Your Contributions", value: (loading || authLoading) ? "..." : userIdeasCount.toString(), icon: <IconCollab /> },
         { title: "AI Refinement Active", value: "Enabled", icon: <IconSparkles /> },
         { title: "Potential Ventures", value: "Beta", icon: <IconRocket /> },
     ];

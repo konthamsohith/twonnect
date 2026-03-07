@@ -19,6 +19,7 @@ export default function SubmitIdeaPage() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [impact, setImpact] = useState("");
+    const [isCollaborative, setIsCollaborative] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -37,7 +38,7 @@ export default function SubmitIdeaPage() {
                 impact,
                 author_id: user.id,
                 author_name: user.user_metadata?.full_name || user.email || "Anonymous",
-                status: "Draft"
+                status: isCollaborative ? "Collaborative" : "Draft"
             });
 
             console.log("Submission success");
@@ -92,6 +93,19 @@ export default function SubmitIdeaPage() {
                             value={impact}
                             onChange={(e) => setImpact(e.target.value)}
                         />
+                    </div>
+
+                    <div className="input-wrapper" style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginTop: "1rem" }}>
+                        <input
+                            type="checkbox"
+                            id="collab-check"
+                            checked={isCollaborative}
+                            onChange={(e) => setIsCollaborative(e.target.checked)}
+                            style={{ width: "20px", height: "20px" }}
+                        />
+                        <label htmlFor="collab-check" className="input-label" style={{ marginBottom: 0, cursor: "pointer" }}>
+                            Open for Collaboration (Visible in Collaborations Portal)
+                        </label>
                     </div>
 
                     <div style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}>

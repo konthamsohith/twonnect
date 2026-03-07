@@ -3,85 +3,185 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-import { getUserIdeas, Idea } from "@/lib/supabase-db";
+import { getUserIdeas, Idea, updateIdea, deleteIdea } from "@/lib/supabase-db";
+import EditIdeaModal from "@/app/components/EditIdeaModal";
+import IdeaTableRow from "@/app/components/IdeaTableRow";
+import ManagementHeader from "@/app/components/ManagementHeader";
 
-const IconSparkles = () => (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.912 5.813h6.111l-4.943 3.591 1.887 5.85L12 14.663l-4.967 3.591 1.887-5.85-4.943-3.591h6.111L12 3z" /></svg>
+const IconPlus = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
 );
 
 export default function MyIdeasPage() {
-    const { user } = useAuth();
+    const { user, loading: authLoading } = useAuth();
     const [ideas, setIdeas] = useState<Idea[]>([]);
     const [loading, setLoading] = useState(true);
+    const [editingIdea, setEditingIdea] = useState<Idea | null>(null);
 
-    useEffect(() => {
-        async function fetchIdeas() {
+    // Filtering states
+    const [searchQuery, setSearchQuery] = useState("");
+    const [activeTab, setActiveTab] = useState("all");
+
+    const fetchIdeas = async () => {
+        setLoading(true);
+        try {
             if (user?.id) {
                 const userIdeas = await getUserIdeas(user.id);
                 setIdeas(userIdeas);
             }
+        } catch (err) {
+            console.error("Fetch ideas failed:", err);
+        } finally {
             setLoading(false);
         }
-        fetchIdeas();
-    }, [user]);
+    };
+
+    useEffect(() => {
+        if (!authLoading) {
+            fetchIdeas();
+        }
+    }, [user, authLoading]);
+
+    const handleDelete = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this idea?")) return;
+        try {
+            await deleteIdea(id);
+            setIdeas(ideas.filter(i => i.id !== id));
+        } catch (error) {
+            alert("Failed to delete idea.");
+        }
+    };
+
+    const handleUpdate = async (id: string, data: Partial<Idea>) => {
+        try {
+            await updateIdea(id, data);
+            await fetchIdeas();
+        } catch (error) {
+            console.error("Update failed:", error);
+            throw error;
+        }
+    };
+
+    // Filtered data
+    const filteredIdeas = ideas.filter(idea => {
+        const matchesSearch = idea.title.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesTab = activeTab === "all" || idea.status === activeTab;
+        return matchesSearch && matchesTab;
+    });
+
+    // Stats
+    const totalIdeas = ideas.length;
+    const collaborativeCount = ideas.filter(i => i.status === "Collaborative").length;
+    const draftCount = totalIdeas - collaborativeCount;
 
     return (
-        <div className="dashboard-page">
-            <header className="dashboard-header">
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+        <div className="dashboard-page control-center">
+            <header className="dashboard-header" style={{ marginBottom: "1.5rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                     <div>
-                        <h1>My Ideas</h1>
-                        <p>Manage and track the ideas you&apos;ve submitted and refined.</p>
+                        <h1 style={{ fontSize: "2.25rem", fontWeight: 800 }}>Idea Control Center</h1>
+                        <p style={{ opacity: 0.8 }}>Professional management suite for your startup registry.</p>
                     </div>
+                    <Link href="/dashboard/submit" className="btn-blue" style={{ display: "flex", alignItems: "center", gap: "0.5rem", borderRadius: "10px", padding: "0.8rem 1.4rem", fontWeight: 700 }}>
+                        <IconPlus /> Add Proposal
+                    </Link>
                 </div>
             </header>
 
-            <div className="dashboard-list">
-                {loading ? (
-                    // Skeleton State
+            {/* Quick Stats Summary */}
+            <div className="stats-summary" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.25rem", marginBottom: "2rem" }}>
+                <div className="stat-plate" style={{ background: "white", padding: "1.25rem", borderRadius: "16px", border: "1px solid #e5e7eb" }}>
+                    <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", marginBottom: "0.25rem" }}>Total Proposals</div>
+                    <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "#111827" }}>{loading ? "..." : totalIdeas}</div>
+                </div>
+                <div className="stat-plate" style={{ background: "white", padding: "1.25rem", borderRadius: "16px", border: "1px solid #e5e7eb" }}>
+                    <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", marginBottom: "0.25rem" }}>Collaborative</div>
+                    <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "var(--lime)" }}>{loading ? "..." : collaborativeCount}</div>
+                </div>
+                <div className="stat-plate" style={{ background: "white", padding: "1.25rem", borderRadius: "16px", border: "1px solid #e5e7eb" }}>
+                    <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", marginBottom: "0.25rem" }}>Draft Backlog</div>
+                    <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "var(--blue)" }}>{loading ? "..." : draftCount}</div>
+                </div>
+            </div>
+
+            <ManagementHeader
+                onSearch={setSearchQuery}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                totalCount={filteredIdeas.length}
+            />
+
+            <div className="management-container" style={{
+                background: "white",
+                borderRadius: "16px",
+                border: "1px solid #e5e7eb",
+                overflow: "hidden",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.02)"
+            }}>
+                {/* Table Header */}
+                <div className="management-header-labels" style={{
+                    display: "grid",
+                    gridTemplateColumns: "140px 1fr 180px 100px 140px",
+                    padding: "0.75rem 1.5rem",
+                    background: "#f9fafb",
+                    borderBottom: "1px solid #e5e7eb",
+                    fontSize: "0.65rem",
+                    fontWeight: 700,
+                    color: "#9ca3af",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em"
+                }}>
+                    <div>Status</div>
+                    <div>Concept & Description</div>
+                    <div>Health Metrics</div>
+                    <div>Added</div>
+                    <div style={{ textAlign: "right" }}>Management</div>
+                </div>
+
+                {(loading || authLoading) ? (
                     [1, 2, 3].map((i) => (
-                        <div key={i} className="list-item" style={{ opacity: 0.6 }}>
-                            <div className="item-main">
-                                <div className="skeleton skeleton-tag" />
-                                <div className="skeleton skeleton-title" />
-                                <div className="skeleton skeleton-text" style={{ width: '40%' }} />
-                            </div>
+                        <div key={i} className="skeleton-row" style={{ height: "72px", borderBottom: "1px solid #f3f4f6", padding: "1rem 1.5rem" }}>
+                            <div style={{ height: "16px", width: "120px", background: "#f3f4f6", borderRadius: "4px" }}></div>
                         </div>
+                    ))
+                ) : filteredIdeas.length > 0 ? (
+                    filteredIdeas.map((idea) => (
+                        <IdeaTableRow
+                            key={idea.id}
+                            idea={idea}
+                            onEdit={() => setEditingIdea(idea)}
+                            onDelete={() => handleDelete(idea.id!)}
+                            onAudit={() => alert("AI Audit is analyzing your idea...")}
+                        />
                     ))
                 ) : (
-                    // Real Data
-                    ideas.map((idea, index) => (
-                        <div key={idea.id || index} className="list-item">
-                            <div className="item-main">
-                                <div className="item-tag" style={{
-                                    background: idea.status === "Collaborative" ? "rgba(187, 244, 81, 0.1)" : "rgba(0, 122, 255, 0.1)",
-                                    color: idea.status === "Collaborative" ? "#749a1d" : "var(--blue)"
-                                }}>
-                                    {idea.status}
-                                </div>
-                                <h4>{idea.title}</h4>
-                                <p>Impact Score: <strong>{idea.impact}</strong> &bull; {idea.collaborators} Active Collaborators</p>
-                            </div>
-                            <div className="item-meta">
-                                <div style={{ display: "flex", gap: "0.5rem" }}>
-                                    <button className="btn-ghost">Edit</button>
-                                    <button className="btn-black" style={{ display: "flex", alignItems: "center", gap: "0.4rem", padding: "0.5rem 1rem", fontSize: "0.85rem" }}>
-                                        <IconSparkles /> AI Audit
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                )}
-                {!loading && ideas.length === 0 && (
-                    <div className="chart-card" style={{ textAlign: "center", padding: "4rem" }}>
-                        <p style={{ color: "#6b7280" }}>You haven&apos;t submitted any ideas yet.</p>
-                        <Link href="/dashboard/submit" className="btn-blue" style={{ marginTop: "1rem", display: "inline-block" }}>
-                            Submit Your First Idea
-                        </Link>
+                    <div style={{ padding: "4rem 2rem", textAlign: "center", color: "#6b7280" }}>
+                        <p>No proposals match your current filters.</p>
                     </div>
                 )}
             </div>
+
+            {!loading && !authLoading && ideas.length === 0 && (
+                <div className="chart-card" style={{ textAlign: "center", padding: "4rem 2rem", marginTop: "2rem" }}>
+                    <h3 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: "1rem" }}>
+                        Registry Empty
+                    </h3>
+                    <p style={{ color: "#6b7280", marginBottom: "2rem" }}>
+                        Your professional startup ideas will be managed here once submitted.
+                    </p>
+                    <Link href="/dashboard/submit" className="btn-blue" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.8rem 2rem" }}>
+                        <IconPlus /> New Submission
+                    </Link>
+                </div>
+            )}
+
+            {editingIdea && (
+                <EditIdeaModal
+                    idea={editingIdea}
+                    onClose={() => setEditingIdea(null)}
+                    onUpdate={handleUpdate}
+                />
+            )}
         </div>
     );
 }
