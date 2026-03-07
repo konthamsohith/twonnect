@@ -68,68 +68,75 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { name: "Account", href: "/dashboard/settings", icon: <IconAccount /> },
     ];
 
+    const isSettingsPage = pathname === "/dashboard/settings";
+
     return (
         <div className="dashboard-layout">
-            <aside className="sidebar">
-                <Link href="/" className="sidebar-logo">
-                    <Logo />
-                </Link>
+            {!isSettingsPage && (
+                <aside className="sidebar">
+                    <Link href="/" className="sidebar-logo">
+                        <Logo />
+                    </Link>
 
-                <Link href="/dashboard/submit" style={{ textDecoration: "none" }}>
-                    <button className="btn-new" style={{ marginBottom: "1.5rem", width: "100%" }}>
-                        <IconPlus /> Submit New Idea
-                    </button>
-                </Link>
-
-                <nav className="sidebar-nav">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className={`nav-item ${pathname === item.href ? "active" : ""}`}
-                        >
-                            <span>{item.icon}</span>
-                            {item.name}
-                        </Link>
-                    ))}
-
-                    <div style={{ margin: "1.25rem 0 0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", paddingLeft: "1rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                        Management
-                    </div>
-
-                    {secondaryNav.map((item) => (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className={`nav-item ${pathname === item.href ? "active" : ""}`}
-                        >
-                            <span>{item.icon}</span>
-                            {item.name}
-                        </Link>
-                    ))}
-                </nav>
-
-                <div className="sidebar-footer">
-                    <div className="sidebar-user-container">
-                        <div className="sidebar-user">
-                            {avatarUrl && avatarUrl !== "" ? (
-                                <img src={avatarUrl} alt="" className="user-avatar" />
-                            ) : (
-                                <div className="user-avatar initials-avatar">{userInitials}</div>
-                            )}
-                            <div className="user-info">
-                                <span className="user-name">{fullName}</span>
-                                <span className="user-email" title={user?.email || ""}>{user?.email}</span>
-                            </div>
-                        </div>
-                        <button className="logout-btn" onClick={handleLogout} title="Logout">
-                            <IconLogout />
+                    <Link href="/dashboard/submit" style={{ textDecoration: "none" }}>
+                        <button className="btn-new" style={{ marginBottom: "1.5rem", width: "100%" }}>
+                            <IconPlus /> Submit New Idea
                         </button>
-                    </div>
-                </div>
-            </aside>
+                    </Link>
 
-            <main className="main-content">
+                    <nav className="sidebar-nav">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={`nav-item ${pathname === item.href ? "active" : ""}`}
+                            >
+                                <span>{item.icon}</span>
+                                {item.name}
+                            </Link>
+                        ))}
+
+                        <div style={{ margin: "1.25rem 0 0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", paddingLeft: "1rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                            Management
+                        </div>
+
+                        {secondaryNav.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={`nav-item ${pathname === item.href ? "active" : ""}`}
+                            >
+                                <span>{item.icon}</span>
+                                {item.name}
+                            </Link>
+                        ))}
+                    </nav>
+
+                    <div className="sidebar-footer">
+                        <div className="sidebar-user-container">
+                            <div className="sidebar-user">
+                                {avatarUrl && avatarUrl !== "" ? (
+                                    <img src={avatarUrl} alt="" className="user-avatar" />
+                                ) : (
+                                    <div className="user-avatar initials-avatar">{userInitials}</div>
+                                )}
+                                <div className="user-info">
+                                    <span className="user-name">{fullName}</span>
+                                    <span className="user-email" title={user?.email || ""}>{user?.email}</span>
+                                </div>
+                            </div>
+                            <button className="logout-btn" onClick={handleLogout} title="Logout">
+                                <IconLogout />
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+            )}
+
+            <main
+                className="main-content"
+                style={isSettingsPage ? { marginLeft: 0, padding: 0 } : {}}
+            >
                 {children}
             </main>
         </div>
