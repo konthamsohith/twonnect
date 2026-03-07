@@ -587,8 +587,9 @@ export default function InvestorsPage() {
                     background: none;
                     border: none;
                     padding: 10px 16px;
-                    font-size: 1.1rem;
-                    font-weight: 700;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    letter-spacing: -0.03em;
                     color: #6b7280;
                     cursor: pointer;
                     border-radius: 12px;

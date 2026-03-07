@@ -30,6 +30,9 @@ const IconAccount = () => (
 const IconLogout = () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
 );
+const IconAdmin = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+);
 import Logo from "../components/Logo";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -61,6 +64,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { name: "Messages", href: "/dashboard/messages", icon: <IconMessages /> },
     ];
 
+    const adminNavItems = [
+        { name: "Requests", href: "/dashboard/admin", icon: <IconAdmin /> },
+    ];
+
     const secondaryNav = [
         { name: "Account", href: "/dashboard/settings", icon: <IconAccount /> },
     ];
@@ -78,6 +85,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                     <nav className="sidebar-nav">
                         {navItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={`nav-item ${pathname === item.href ? "active" : ""}`}
+                            >
+                                <span>{item.icon}</span>
+                                {item.name}
+                            </Link>
+                        ))}
+
+                        <div style={{ margin: "1.25rem 0 0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", paddingLeft: "1rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                            Admin
+                        </div>
+
+                        {adminNavItems.map((item) => (
                             <Link
                                 key={item.href}
                                 href={item.href}
