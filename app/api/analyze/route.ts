@@ -15,7 +15,7 @@ export async function POST(req: Request) {
         }
 
         const systemPrompt = `
-You are IdeaAI, an elite venture strategy auditor. Your goal is to provide deep, high-fidelity market research and disruption analysis.
+You are TWONNECT, an elite venture strategy auditor. Your goal is to provide deep, high-fidelity market research and disruption analysis.
 You will be provided with a startup concept and a history of previous audits for context (memory).
 
 TASKS:

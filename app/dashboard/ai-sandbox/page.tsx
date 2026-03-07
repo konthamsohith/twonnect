@@ -108,9 +108,9 @@ export default function AISandboxPage() {
             <header className="dashboard-header" style={{ marginBottom: "3rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
                     <div>
-                        <h1 style={{ fontSize: "2.5rem", fontWeight: 800, color: "#111827", letterSpacing: "-0.03em" }}>AI Sandbox</h1>
+                        <h1 style={{ fontSize: "101px", fontWeight: 400, color: "#111827", letterSpacing: "-0.05em", lineHeight: "1" }}>AI Sandbox</h1>
                         <p style={{ color: "#6b7280", marginTop: "0.5rem", fontSize: "1.1rem" }}>
-                            Powered by <span style={{ color: "var(--blue)", fontWeight: 700 }}>Groq Intelligence</span> • Deep Market Scouring Active.
+                            Powered by <span style={{ color: "var(--blue)", fontWeight: 700 }}>TWONNECT</span> • Deep Market Scouring Active.
                         </p>
                     </div>
                     <span className="early-access-badge">
@@ -156,7 +156,7 @@ export default function AISandboxPage() {
                     <section className="input-card">
                         <div style={{ padding: "3rem" }}>
                             <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "0.5rem" }}>Intelligence Registry</h3>
-                            <p style={{ color: "#6b7280", marginBottom: "2rem" }}>IdeaAI will perform an exhaustive search of existing ventures to see if your concept already exists.</p>
+                            <p style={{ color: "#6b7280", marginBottom: "2rem" }}>TWONNECT will perform an exhaustive search of existing ventures to see if your concept already exists.</p>
 
                             <div className="form-group">
                                 <label style={{ fontSize: "0.65rem", fontWeight: 800, color: "#9ca3af", textTransform: "uppercase", display: "block", marginBottom: "0.75rem" }}>

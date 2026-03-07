@@ -152,7 +152,7 @@ export default function InvestorsPage() {
         <div className="dashboard-page institutional-portal">
             <header className="portal-header">
                 <div className="exclusive-pill">INSTITUTIONAL DEAL ROOM</div>
-                <h1>Live Opportunities</h1>
+                <h1 style={{ fontSize: "101px", fontWeight: 400, letterSpacing: "-0.05em", lineHeight: "1", marginBottom: "1rem" }}>Live Opportunities</h1>
                 <p>Curated, high-validation concepts ready for capital deployment. Access restricted to approved <span className="auth-text">Syndicate Leads</span> & <span className="auth-text">LPs</span>.</p>
             </header>
 
@@ -523,8 +523,6 @@ export default function InvestorsPage() {
                 }
 
                 .portal-header h1 {
-                    font-size: 3rem;
-                    font-weight: 800;
                     letter-spacing: -0.03em;
                     margin-bottom: 0.75rem;
                 }
@@ -766,9 +764,28 @@ export default function InvestorsPage() {
                 }
                 .modal-close:hover { color: #111827; background: #f3f4f6; border-color: #d1d5db; }
 
-                .modal-header { margin-bottom: 2rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 1.5rem; }
-                .modal-label { display: inline-block; font-size: 0.65rem; font-weight: 700; color: #4b5563; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; background: #f3f4f6; padding: 4px 8px; border-radius: 4px; }
-                .modal-header h2 { font-size: 1.5rem; font-weight: 700; color: #111827; margin: 0; letter-spacing: -0.01em; }
+                .modal-header { 
+                    margin-bottom: 2rem; 
+                    border-bottom: 1px solid #e5e7eb; 
+                    padding-bottom: 1.5rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 0.5rem;
+                }
+                .modal-label { 
+                    display: inline-block; 
+                    font-size: 0.65rem; 
+                    font-weight: 800; 
+                    color: #4b5563; 
+                    text-transform: uppercase; 
+                    letter-spacing: 0.08em; 
+                    background: #f3f4f6; 
+                    padding: 4px 10px; 
+                    border-radius: 6px;
+                    white-space: nowrap;
+                }
+                .modal-header h2 { font-size: 1.4rem; font-weight: 800; color: #111827; margin: 0; letter-spacing: -0.02em; line-height: 1.2; }
                 .modal-meta { display: flex; gap: 1rem; font-size: 0.8rem; color: #6b7280; font-weight: 500; margin-top: 0.5rem; }
                 
                 .modal-body { margin-bottom: 2rem; }

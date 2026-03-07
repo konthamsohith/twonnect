@@ -32,6 +32,10 @@ export default function SubmitIdeaPage() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [impact, setImpact] = useState("");
+    const [targetAudience, setTargetAudience] = useState<"Developer" | "Investor">("Developer");
+    const [valuation, setValuation] = useState("");
+    const [fundingRequired, setFundingRequired] = useState("");
+    const [equityOffered, setEquityOffered] = useState("");
     const [isCollaborative, setIsCollaborative] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -46,7 +50,11 @@ export default function SubmitIdeaPage() {
                 impact,
                 author_id: user.id,
                 author_name: user?.user_metadata?.full_name || user.email || "Anonymous",
-                status: isCollaborative ? "Collaborative" : "Draft"
+                status: isCollaborative ? "Collaborative" : "Draft",
+                target_audience: targetAudience,
+                valuation: targetAudience === "Investor" ? valuation : undefined,
+                funding_required: targetAudience === "Investor" ? fundingRequired : undefined,
+                equity_offered: targetAudience === "Investor" ? equityOffered : undefined
             });
             router.push("/dashboard/ideas");
         } catch (error) {
@@ -137,10 +145,107 @@ export default function SubmitIdeaPage() {
                             </div>
                         </div>
 
+                        <div className="form-section" style={{ marginBottom: "2.5rem" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
+                                <div style={{ background: "#f3f4f6", padding: "4px", borderRadius: "6px" }}><IconSparkles /></div>
+                                <span style={{ fontSize: "0.7rem", fontWeight: 800, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em" }}>Step 2: Target Audience</span>
+                            </div>
+
+                            <div className="target-selection" style={{
+                                display: "flex",
+                                background: "#f3f4f6",
+                                padding: "4px",
+                                borderRadius: "12px",
+                                marginBottom: "2rem"
+                            }}>
+                                <button
+                                    type="button"
+                                    onClick={() => setTargetAudience("Developer")}
+                                    style={{
+                                        flex: 1,
+                                        padding: "0.75rem",
+                                        borderRadius: "10px",
+                                        border: "none",
+                                        fontSize: "0.85rem",
+                                        fontWeight: 700,
+                                        cursor: "pointer",
+                                        background: targetAudience === "Developer" ? "white" : "transparent",
+                                        color: targetAudience === "Developer" ? "var(--blue)" : "#6b7280",
+                                        boxShadow: targetAudience === "Developer" ? "0 2px 4px rgba(0,0,0,0.05)" : "none",
+                                        transition: "all 0.2s"
+                                    }}
+                                >
+                                    Contributors & Developers
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setTargetAudience("Investor")}
+                                    style={{
+                                        flex: 1,
+                                        padding: "0.75rem",
+                                        borderRadius: "10px",
+                                        border: "none",
+                                        fontSize: "0.85rem",
+                                        fontWeight: 700,
+                                        cursor: "pointer",
+                                        background: targetAudience === "Investor" ? "white" : "transparent",
+                                        color: targetAudience === "Investor" ? "var(--blue)" : "#6b7280",
+                                        boxShadow: targetAudience === "Investor" ? "0 2px 4px rgba(0,0,0,0.05)" : "none",
+                                        transition: "all 0.2s"
+                                    }}
+                                >
+                                    Funding & Investors
+                                </button>
+                            </div>
+
+                            {targetAudience === "Investor" && (
+                                <div className="investor-fields" style={{
+                                    display: "grid",
+                                    gridTemplateColumns: "1fr 1fr",
+                                    gap: "1.5rem",
+                                    animation: "slideDown 0.3s ease-out"
+                                }}>
+                                    <div className="input-field">
+                                        <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "0.5rem" }}>Project Valuation ($)</label>
+                                        <input
+                                            type="text"
+                                            placeholder="e.g. 5,000,000"
+                                            value={valuation}
+                                            onChange={(e) => setValuation(e.target.value)}
+                                            style={{ width: "100%", padding: "0.875rem 1.25rem", borderRadius: "12px", border: "1px solid #e5e7eb", fontSize: "0.95rem", outline: "none" }}
+                                            className="system-input"
+                                        />
+                                    </div>
+                                    <div className="input-field">
+                                        <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "0.5rem" }}>Funding Required ($)</label>
+                                        <input
+                                            type="text"
+                                            placeholder="e.g. 500,000"
+                                            value={fundingRequired}
+                                            onChange={(e) => setFundingRequired(e.target.value)}
+                                            style={{ width: "100%", padding: "0.875rem 1.25rem", borderRadius: "12px", border: "1px solid #e5e7eb", fontSize: "0.95rem", outline: "none" }}
+                                            className="system-input"
+                                        />
+                                    </div>
+                                    <div className="input-field" style={{ gridColumn: "span 2" }}>
+                                        <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "0.5rem" }}>Equity Offered (%)</label>
+                                        <input
+                                            type="text"
+                                            placeholder="e.g. 10%"
+                                            value={equityOffered}
+                                            onChange={(e) => setEquityOffered(e.target.value)}
+                                            style={{ width: "100%", padding: "0.875rem 1.25rem", borderRadius: "12px", border: "1px solid #e5e7eb", fontSize: "0.95rem", outline: "none" }}
+                                            className="system-input"
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
                         <div className="form-section">
                             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
                                 <div style={{ background: "#f3f4f6", padding: "4px", borderRadius: "6px" }}><IconShield /></div>
-                                <span style={{ fontSize: "0.7rem", fontWeight: 800, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em" }}>Step 2: Operational Parameters</span>
+                                <span style={{ fontSize: "0.7rem", fontWeight: 800, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em" }}>Step 3: Operational Parameters</span>
                             </div>
 
                             <div className="input-field" style={{ marginBottom: "1.5rem" }}>
@@ -211,7 +316,7 @@ export default function SubmitIdeaPage() {
                         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
                             <div style={{ background: "#111827", color: "white", padding: "8px", borderRadius: "10px" }}><IconSparkles /></div>
                             <div>
-                                <h3 style={{ margin: 0, fontSize: "1rem", fontWeight: 800 }}>IdeaAI Companion</h3>
+                                <h3 style={{ margin: 0, fontSize: "1rem", fontWeight: 800 }}>TWONNECT Companion</h3>
                                 <span style={{ fontSize: "0.7rem", color: "#6b7280", fontWeight: 600 }}>READY TO REFINE</span>
                             </div>
                         </div>
@@ -267,6 +372,11 @@ export default function SubmitIdeaPage() {
                     box-shadow: 0 8px 16px rgba(0,0,0,0.15);
                 }
                 .refine-btn:active { transform: translateY(0); }
+
+                @keyframes slideDown {
+                    from { opacity: 0; transform: translateY(-10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
                 
                 @media (max-width: 1024px) {
                     .split-layout { grid-template-columns: 1fr; }

@@ -80,7 +80,7 @@ export default function MyIdeasPage() {
             <header className="dashboard-header" style={{ marginBottom: "1.5rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                     <div>
-                        <h1 style={{ fontSize: "2.25rem", fontWeight: 800 }}>Idea Control Center</h1>
+                        <h1 style={{ fontSize: "101px", fontWeight: 400, letterSpacing: "-0.05em", lineHeight: "1" }}>Idea Control Center</h1>
                         <p style={{ opacity: 0.8 }}>Professional management suite for your startup registry.</p>
                     </div>
                     <Link href="/dashboard/submit" className="btn-blue" style={{ display: "flex", alignItems: "center", gap: "0.5rem", borderRadius: "10px", padding: "0.8rem 1.4rem", fontWeight: 700 }}>

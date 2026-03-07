@@ -50,7 +50,7 @@ const INITIAL_CHATS: Chat[] = [
         ]
     },
     {
-        id: 2, name: "IdeaAI Assistant", role: "AI Collaborator", tag: "ai",
+        id: 2, name: "TWONNECT Assistant", role: "AI Collaborator", tag: "ai",
         lastMsg: "I've refined your problem statement...", time: "1h ago", unread: 0,
         messages: [
             { id: 1, from: 'them', text: "Hello! I've analyzed your latest idea submission.", time: "08:00 AM" },
@@ -199,7 +199,7 @@ export default function MessagesPage() {
                                         e.preventDefault();
                                         sendMessage();
                                     }
-                                }}                            />
+                                }} />
                             <button className="btn-send" onClick={sendMessage} disabled={!input.trim()}>
                                 <IconSend /> <span>Send</span>
                             </button>

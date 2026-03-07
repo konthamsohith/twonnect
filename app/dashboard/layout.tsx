@@ -6,9 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
 // ── Premium SVG Icons ──────────────────────────────────────────
-const IconPlus = () => (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-);
 const IconMarketplace = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
 );
@@ -78,11 +75,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         <Logo />
                     </Link>
 
-                    <Link href="/dashboard/submit" style={{ textDecoration: "none" }}>
-                        <button className="btn-new" style={{ marginBottom: "1.5rem", width: "100%" }}>
-                            <IconPlus /> Submit New Idea
-                        </button>
-                    </Link>
 
                     <nav className="sidebar-nav">
                         {navItems.map((item) => (

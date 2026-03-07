@@ -18,6 +18,10 @@ export interface Idea {
     collaborators: number;
     created_at: string;
     author_name: string;
+    target_audience?: "Developer" | "Investor";
+    valuation?: string;
+    funding_required?: string;
+    equity_offered?: string;
 }
 
 /**
