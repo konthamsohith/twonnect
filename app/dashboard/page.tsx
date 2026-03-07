@@ -54,7 +54,7 @@ export default function DashboardPage() {
             <header className="dashboard-header" style={{ marginBottom: "2.5rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
                     <div>
-                        <h1 style={{ fontSize: "101px", fontWeight: 400, color: "#111827", letterSpacing: "-0.05em", lineHeight: "1" }}>Idea Marketplace</h1>
+                        <h1 style={{ fontSize: "32px", fontWeight: 600, color: "#111827", letterSpacing: "-0.03em", lineHeight: "1" }}>Idea Marketplace</h1>
                         <p style={{ color: "#6b7280", marginTop: "0.4rem", fontSize: "1.05rem" }}>Bridging real-world problems with actionable execution.</p>
                     </div>
                     <Link href="/dashboard/submit" className="btn-blue" style={{ borderRadius: "12px", padding: "0.8rem 1.6rem", display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 700 }}>
@@ -174,9 +174,10 @@ export default function DashboardPage() {
                     margin-bottom: 0.5rem;
                 }
                 .stat-value {
-                    font-size: 1.75rem;
-                    font-weight: 900;
+                    font-size: 20px;
+                    font-weight: 600;
                     color: #111827;
+                    letter-spacing: -0.03em;
                 }
                 
                 .search-box {

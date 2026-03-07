@@ -80,7 +80,7 @@ export default function MyIdeasPage() {
             <header className="dashboard-header" style={{ marginBottom: "1.5rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                     <div>
-                        <h1 style={{ fontSize: "101px", fontWeight: 400, letterSpacing: "-0.05em", lineHeight: "1" }}>Idea Control Center</h1>
+                        <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: "1" }}>Idea Control Center</h1>
                         <p style={{ opacity: 0.8 }}>Professional management suite for your startup registry.</p>
                     </div>
                     <Link href="/dashboard/submit" className="btn-blue" style={{ display: "flex", alignItems: "center", gap: "0.5rem", borderRadius: "10px", padding: "0.8rem 1.4rem", fontWeight: 700 }}>
@@ -93,15 +93,15 @@ export default function MyIdeasPage() {
             <div className="stats-summary" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.25rem", marginBottom: "2rem" }}>
                 <div className="stat-plate" style={{ background: "white", padding: "1.25rem", borderRadius: "16px", border: "1px solid #e5e7eb" }}>
                     <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", marginBottom: "0.25rem" }}>Total Proposals</div>
-                    <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "#111827" }}>{loading ? "..." : totalIdeas}</div>
+                    <div style={{ fontSize: "20px", fontWeight: 600, color: "#111827", letterSpacing: "-0.03em" }}>{loading ? "..." : totalIdeas}</div>
                 </div>
                 <div className="stat-plate" style={{ background: "white", padding: "1.25rem", borderRadius: "16px", border: "1px solid #e5e7eb" }}>
                     <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", marginBottom: "0.25rem" }}>Collaborative</div>
-                    <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "var(--lime)" }}>{loading ? "..." : collaborativeCount}</div>
+                    <div style={{ fontSize: "20px", fontWeight: 600, color: "var(--lime)", letterSpacing: "-0.03em" }}>{loading ? "..." : collaborativeCount}</div>
                 </div>
                 <div className="stat-plate" style={{ background: "white", padding: "1.25rem", borderRadius: "16px", border: "1px solid #e5e7eb" }}>
                     <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", marginBottom: "0.25rem" }}>Draft Backlog</div>
-                    <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "var(--blue)" }}>{loading ? "..." : draftCount}</div>
+                    <div style={{ fontSize: "20px", fontWeight: 600, color: "var(--blue)", letterSpacing: "-0.03em" }}>{loading ? "..." : draftCount}</div>
                 </div>
             </div>
 

@@ -40,7 +40,7 @@ export default function CollaborationsPage() {
         <div className="dashboard-page">
             <header className="dashboard-header">
                 <div>
-                    <h1 style={{ fontSize: "101px", fontWeight: 400, letterSpacing: "-0.05em", lineHeight: "1" }}>Collaborations</h1>
+                    <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: "1" }}>Collaborations</h1>
                     <p>Build the next big thing with our community of makers.</p>
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>

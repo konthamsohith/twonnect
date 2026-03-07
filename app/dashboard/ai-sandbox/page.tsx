@@ -108,7 +108,7 @@ export default function AISandboxPage() {
             <header className="dashboard-header" style={{ marginBottom: "3rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
                     <div>
-                        <h1 style={{ fontSize: "101px", fontWeight: 400, color: "#111827", letterSpacing: "-0.05em", lineHeight: "1" }}>AI Sandbox</h1>
+                        <h1 style={{ fontSize: "32px", fontWeight: 600, color: "#111827", letterSpacing: "-0.03em", lineHeight: "1" }}>AI Sandbox</h1>
                         <p style={{ color: "#6b7280", marginTop: "0.5rem", fontSize: "1.1rem" }}>
                             Powered by <span style={{ color: "var(--blue)", fontWeight: 700 }}>TWONNECT</span> • Deep Market Scouring Active.
                         </p>

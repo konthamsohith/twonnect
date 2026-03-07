@@ -152,7 +152,7 @@ export default function InvestorsPage() {
         <div className="dashboard-page institutional-portal">
             <header className="portal-header">
                 <div className="exclusive-pill">INSTITUTIONAL DEAL ROOM</div>
-                <h1 style={{ fontSize: "101px", fontWeight: 400, letterSpacing: "-0.05em", lineHeight: "1", marginBottom: "1rem" }}>Live Opportunities</h1>
+                <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: "1", marginBottom: "1rem" }}>Live Opportunities</h1>
                 <p>Curated, high-validation concepts ready for capital deployment. Access restricted to approved <span className="auth-text">Syndicate Leads</span> & <span className="auth-text">LPs</span>.</p>
             </header>
 
@@ -561,7 +561,7 @@ export default function InvestorsPage() {
                     color: #111827;
                 }
                 .stat-data { display: flex; flex-direction: column; }
-                .stat-value { font-size: 1.75rem; font-weight: 800; color: #111827; letter-spacing: -0.02em; }
+                .stat-value { font-size: 20px; font-weight: 600; color: #111827; letter-spacing: -0.03em; }
                 .stat-label { font-size: 0.8rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
 
                 /* Deals Section & Tabs */
