@@ -473,8 +473,7 @@ export const getInboundCollaborationRequests = async (ownerId: string) => {
             .from("collaboration_requests")
             .select(`
                 *,
-                ideas (title),
-                user_email:user_id
+                ideas (title)
             `)
             .in("idea_id", ideaIds)
             .eq("status", "pending")

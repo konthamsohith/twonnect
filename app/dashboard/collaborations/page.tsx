@@ -2,13 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { getCollaborativeIdeas, Idea } from "@/lib/supabase-db";
+import { getCollaborativeIdeas, Idea, createCollaborationRequest, getUserCollaborationRequest } from "@/lib/supabase-db";
 import CollabCard from "@/app/components/CollabCard";
 
 export default function CollaborationsPage() {
     const { user, loading: authLoading } = useAuth();
     const [collaborativeIdeas, setCollaborativeIdeas] = useState<Idea[]>([]);
     const [loading, setLoading] = useState(true);
+    const [sentRequests, setSentRequests] = useState<Set<string>>(new Set());
+    const [actionLoading, setActionLoading] = useState<string | null>(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -16,6 +18,17 @@ export default function CollaborationsPage() {
             try {
                 const ideas = await getCollaborativeIdeas();
                 setCollaborativeIdeas(ideas);
+
+                if (user?.id) {
+                    // Check for existing requests to show "Requested" state
+                    const requests = await Promise.all(
+                        ideas.map(async (idea) => {
+                            const req = await getUserCollaborationRequest(idea.id!, user.id);
+                            return req ? idea.id! : null;
+                        })
+                    );
+                    setSentRequests(new Set(requests.filter((id): id is string => id !== null)));
+                }
             } catch (error) {
                 console.error("Error fetching collaborative ideas:", error);
             } finally {
@@ -26,10 +39,25 @@ export default function CollaborationsPage() {
         if (!authLoading) {
             fetchData();
         }
-    }, [authLoading]);
+    }, [authLoading, user?.id]);
 
-    const handleJoinRequest = (ideaId: string) => {
-        alert("Collaboration request sent! The project owner will be notified.");
+    const handleJoinRequest = async (ideaId: string) => {
+        if (!user?.id) return;
+
+        setActionLoading(ideaId);
+        try {
+            const success = await createCollaborationRequest(ideaId, user.id, "Interested in joining this elite venture.");
+            if (success) {
+                setSentRequests(prev => new Set([...Array.from(prev), ideaId]));
+                alert("Collaboration request sent! The project owner will be notified.");
+            } else {
+                alert("Failed to send request. You might have already requested collaboration.");
+            }
+        } catch (error) {
+            console.error("Error sending join request:", error);
+        } finally {
+            setActionLoading(null);
+        }
     };
 
     // Filter projects for "Your Teams" (user is author)
@@ -90,6 +118,8 @@ export default function CollaborationsPage() {
                                         author={idea.author_name}
                                         collaborators={idea.collaborators || 0}
                                         onJoin={() => handleJoinRequest(idea.id!)}
+                                        isRequested={sentRequests.has(idea.id!)}
+                                        isLoading={actionLoading === idea.id}
                                     />
                                 ))}
                             </div>

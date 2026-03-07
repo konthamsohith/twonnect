@@ -9,9 +9,11 @@ interface CollabCardProps {
     author: string;
     collaborators: number;
     onJoin: () => void;
+    isRequested?: boolean;
+    isLoading?: boolean;
 }
 
-export default function CollabCard({ title, description, impact, author, collaborators, onJoin }: CollabCardProps) {
+export default function CollabCard({ title, description, impact, author, collaborators, onJoin, isRequested, isLoading }: CollabCardProps) {
     return (
         <div className="chart-card collab-showcase-card" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
             <div className="card-header-clean" style={{ marginBottom: "1rem" }}>
@@ -38,11 +40,20 @@ export default function CollabCard({ title, description, impact, author, collabo
                     </div>
                 </div>
                 <button
-                    className="btn-black"
-                    style={{ width: "100%", padding: "0.75rem", fontSize: "0.9rem" }}
+                    className={`btn-black ${isRequested ? 'requested' : ''}`}
+                    style={{
+                        width: "100%",
+                        padding: "0.75rem",
+                        fontSize: "0.9rem",
+                        backgroundColor: isRequested ? "#bbf451" : "#111827",
+                        color: isRequested ? "#111827" : "white",
+                        border: "none",
+                        opacity: isLoading ? 0.7 : 1
+                    }}
                     onClick={onJoin}
+                    disabled={isRequested || isLoading}
                 >
-                    Join Project
+                    {isLoading ? "Sending..." : isRequested ? "Request Sent" : "Join Project"}
                 </button>
             </div>
         </div>
