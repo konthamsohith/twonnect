@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { getCollaborativeIdeas, Idea, createCollaborationRequest, getUserCollaborationRequest } from "@/lib/supabase-db";
 import CollabCard from "@/app/components/CollabCard";
+import "./collaborations.css";
 
 export default function CollaborationsPage() {
     const { user, loading: authLoading } = useAuth();
@@ -66,14 +67,18 @@ export default function CollaborationsPage() {
 
     return (
         <div className="dashboard-page">
-            <header className="dashboard-header">
-                <div>
-                    <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: "1" }}>Collaborations</h1>
-                    <p>Build the next big thing with our community of makers.</p>
+            <header className="collab-header-premium">
+                <div className="header-content">
+                    <h1 className="header-title">Collaborations</h1>
+                    <p className="header-subtitle">Build the next big thing with our community of makers.</p>
                 </div>
-                <div style={{ display: "flex", gap: "1rem" }}>
-                    <button className="btn-blue" onClick={() => window.location.href = "/dashboard/submit"}>
+                <div className="header-actions">
+                    <button className="btn-premium-action" onClick={() => window.location.href = "/dashboard/submit"}>
                         Start a Collaborative Project
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
                     </button>
                 </div>
             </header>
@@ -83,12 +88,12 @@ export default function CollaborationsPage() {
                     Loading active projects...
                 </div>
             ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
+                <div className="collaborations-container">
                     {/* Your Teams Section */}
                     {yourTeams.length > 0 && (
-                        <section>
-                            <h2 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: "1.5rem" }}>Projects You Lead</h2>
-                            <div className="stats-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
+                        <section style={{ marginBottom: "5rem" }}>
+                            <h2 className="section-title">Projects You Lead</h2>
+                            <div className="collab-grid">
                                 {yourTeams.map((idea) => (
                                     <CollabCard
                                         key={idea.id}
@@ -106,9 +111,9 @@ export default function CollaborationsPage() {
 
                     {/* Discovery Section */}
                     <section>
-                        <h2 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: "1.5rem" }}>Discover Open Collaborations</h2>
+                        <h2 className="section-title">Discover Open Collaborations</h2>
                         {discoverTeams.length > 0 ? (
-                            <div className="stats-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
+                            <div className="collab-grid">
                                 {discoverTeams.map((idea) => (
                                     <CollabCard
                                         key={idea.id}
@@ -124,8 +129,10 @@ export default function CollaborationsPage() {
                                 ))}
                             </div>
                         ) : (
-                            <div className="chart-card" style={{ textAlign: "center", padding: "3rem" }}>
-                                <p style={{ color: "#6b7280" }}>No open collaborations found. Be the first to start one!</p>
+                            <div className="card" style={{ textAlign: "center", padding: "5rem 2rem", background: "rgba(255,255,255,0.5)", borderStyle: "dashed" }}>
+                                <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🚀</div>
+                                <h3 style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: "0.5rem" }}>No open collaborations yet</h3>
+                                <p style={{ color: "#6b7280", maxWidth: "400px", margin: "0 auto" }}>Be the visionary who starts the next great project. Click "Start a Collaborative Project" to begin.</p>
                             </div>
                         )}
                     </section>

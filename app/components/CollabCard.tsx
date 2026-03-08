@@ -14,56 +14,73 @@ interface CollabCardProps {
 }
 
 export default function CollabCard({ title, description, impact, author, collaborators, onJoin, isRequested, isLoading }: CollabCardProps) {
+    const initials = author ? author.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) : "??";
+
     return (
-        <div className="chart-card collab-showcase-card" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-            <div className="card-header-clean" style={{ marginBottom: "1rem" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                    <h3 style={{
-                        fontFamily: 'var(--font-geist-sans), "GeistSans Fallback"',
-                        fontSize: "18px",
-                        fontWeight: 500,
-                        fontStyle: "normal",
-                        lineHeight: "normal",
-                        color: "rgb(17, 24, 39)",
-                        margin: 0
-                    }}>{title}</h3>
-                    <div className="badge-pill" style={{ background: "rgba(187, 244, 81, 0.1)", color: "#749a1d", fontSize: "0.75rem", padding: "4px 8px" }}>
-                        ACTIVE
-                    </div>
-                </div>
-                <p style={{ fontSize: "0.85rem", color: "#6b7280", marginTop: "4px" }}>by <strong>{author}</strong></p>
+        <div className="premium-collab-card">
+            <div className="card-status-badge">
+                ACTIVE
             </div>
 
-            <p style={{ fontSize: "0.9rem", color: "#4b5563", flex: 1, marginBottom: "1.5rem" }}>
-                {description.length > 120 ? description.substring(0, 117) + "..." : description}
+            <div className="card-category">Venture</div>
+            <h3 className="card-title">{title}</h3>
+
+            <div className="card-author">
+                <div className="author-avatar">{initials}</div>
+                <span className="author-name">by <strong>{author === "You" ? "You" : author}</strong></span>
+            </div>
+
+            <p className="card-description">
+                {description.length > 140 ? description.substring(0, 137) + "..." : description}
             </p>
 
-            <div className="card-footer-stats" style={{ paddingTop: "1rem", borderTop: "1px solid #f3f4f6" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-                    <div style={{ fontSize: "0.85rem", color: "#6b7280" }}>
-                        <strong>{collaborators}</strong> Team Members
-                    </div>
-                    <div style={{ fontSize: "0.85rem", color: "var(--blue)", fontWeight: 600 }}>
-                        {impact.substring(0, 20)}...
+            <div className="card-meta">
+                <div className="meta-item">
+                    <span className="meta-label">Team size</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                        <span className="meta-value">{collaborators} Members</span>
+                        {collaborators > 0 && (
+                            <div className="team-avatars">
+                                {[...Array(Math.min(collaborators, 3))].map((_, i) => (
+                                    <div key={i} className="team-avatar-icon" style={{ zIndex: 3 - i }} />
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
-                <button
-                    className={`btn-black ${isRequested ? 'requested' : ''}`}
-                    style={{
-                        width: "100%",
-                        padding: "0.75rem",
-                        fontSize: "0.9rem",
-                        backgroundColor: isRequested ? "#bbf451" : "#111827",
-                        color: isRequested ? "#111827" : "white",
-                        border: "none",
-                        opacity: isLoading ? 0.7 : 1
-                    }}
-                    onClick={onJoin}
-                    disabled={isRequested || isLoading}
-                >
-                    {isLoading ? "Sending..." : isRequested ? "Request Sent" : "Join Project"}
-                </button>
+                <div className="meta-item" style={{ alignItems: "flex-end" }}>
+                    <span className="meta-label">Impact</span>
+                    <span className="meta-value impact-badge">{impact.substring(0, 15)}</span>
+                </div>
             </div>
+
+            <button
+                className={`btn-collab-join ${isRequested ? 'requested' : ''}`}
+                onClick={onJoin}
+                disabled={isRequested || isLoading}
+            >
+                {isLoading ? (
+                    <>
+                        <span className="loading-spinner"></span>
+                        Sending...
+                    </>
+                ) : isRequested ? (
+                    <>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Request Sent
+                    </>
+                ) : (
+                    <>
+                        Join Project
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </>
+                )}
+            </button>
         </div>
     );
 }
