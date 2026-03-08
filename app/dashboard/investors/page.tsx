@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { getCollaborativeIdeas, Idea, createInvestment, getUserInvestments, Investment, deleteInvestment } from "@/lib/supabase-db";
+import { getCollaborativeIdeas, Idea, createInvestment, getUserInvestments, Investment, deleteInvestment, getPlatformStats } from "@/lib/supabase-db";
 import { useAuth } from "@/context/AuthContext";
 
 // ── Icons (Institutional Standard) ──────────────────────────────
@@ -21,17 +21,14 @@ const IconCheckCircle = () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
 );
 
-const PLATFORM_STATS = [
-    { label: "Total Capital Deployed", value: "$124.5M", icon: <IconBriefcase /> },
-    { label: "Active Syndicates", value: "342", icon: <IconUsers /> },
-    { label: "Avg. ROI (3YR)", value: "+215%", icon: <IconTrendingUp /> },
-];
+
 
 export default function InvestorsPage() {
     const { user } = useAuth();
     const [activeTab, setActiveTab] = useState<'marketplace' | 'portfolio'>('marketplace');
     const [marketDeals, setMarketDeals] = useState<any[]>([]);
     const [portfolioDeals, setPortfolioDeals] = useState<Investment[]>([]);
+    const [platformStats, setPlatformStats] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     // Modal States
@@ -47,6 +44,13 @@ export default function InvestorsPage() {
             if (!user?.id) return;
             setLoading(true);
             try {
+                // Fetch Platform Stats
+                const stats = await getPlatformStats();
+                if (stats) {
+                    const icons = [<IconBriefcase />, <IconUsers />, <IconTrendingUp />];
+                    setPlatformStats(stats.map((s, i) => ({ ...s, icon: icons[i] })));
+                }
+
                 const portfolio = await getUserInvestments(user.id);
                 setPortfolioDeals(portfolio);
 
@@ -56,12 +60,16 @@ export default function InvestorsPage() {
                 );
 
                 const formattedDeals = uninvestedIdeas.map((idea: Idea) => {
-                    const score = 75 + ((idea.title.length * 3) % 25);
+                    const impactNum = idea.impact && !isNaN(Number(idea.impact)) ? Number(idea.impact) : 85;
+                    const score = impactNum;
+
                     const target = typeof idea.funding_required === 'number' ? idea.funding_required :
                         (typeof idea.funding_required === 'string' ? parseInt(idea.funding_required.replace(/[^0-9]/g, '')) :
                             (500000 + ((score - 75) * 100000)));
 
                     const raised = idea.amount_raised || (target * (0.2 + ((idea.description.length % 10) / 15)));
+                    const valuationNum = idea.valuation ? (typeof idea.valuation === 'number' ? idea.valuation : parseFloat(String(idea.valuation).replace(/[^0-9.]/g, '')) * 1000000) : (Number(target) * 5);
+                    const momentumPct = 100 + (impactNum % 50);
 
                     return {
                         id: idea.id,
@@ -72,9 +80,10 @@ export default function InvestorsPage() {
                         authorName: idea.author_name,
                         raised: Number(raised),
                         target: Number(target),
-                        valuation: idea.valuation ? (typeof idea.valuation === 'number' ? `$${(idea.valuation / 1000000).toFixed(1)}M` : idea.valuation) : `$${(Number(target) * 5 / 1000000).toFixed(1)}M Post-Money`,
+                        valuation: idea.valuation ? (typeof idea.valuation === 'number' ? `$${(idea.valuation / 1000000).toFixed(1)}M` : idea.valuation) : `$${(valuationNum / 1000000).toFixed(1)}M Post-Money`,
+                        valuationNum: valuationNum,
                         validationScore: score,
-                        momentum: "+145% MoM Data Volume",
+                        momentum: `+${momentumPct}% MoM Activity`,
                         status: Number(raised) / Number(target) > 0.8 ? "Closing Soon" : "Active"
                     };
                 });
@@ -145,12 +154,29 @@ export default function InvestorsPage() {
             <header className="portal-header">
                 <div className="exclusive-pill">INSTITUTIONAL DEAL ROOM</div>
                 <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: "1", marginBottom: "1rem" }}>Live Opportunities</h1>
-                <p>Curated, high-validation concepts ready for capital deployment. Access restricted to approved <span className="auth-text">Syndicate Leads</span> & <span className="auth-text">LPs</span>.</p>
+                <p>Institutional-grade ventures. Restricted access for authorized partners.</p>
             </header>
 
+            <div className="section-header" style={{ marginBottom: "2rem" }}>
+                <div className="tab-navigation">
+                    <button
+                        className={`tab-btn ${activeTab === 'marketplace' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('marketplace')}
+                    >
+                        Marketplace Deals <span className="count-badge">{marketDeals.length}</span>
+                    </button>
+                    <button
+                        className={`tab-btn ${activeTab === 'portfolio' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('portfolio')}
+                    >
+                        My Portfolio <span className="count-badge">{portfolioDeals.length}</span>
+                    </button>
+                </div>
+            </div>
+
             {/* ── PLATFORM MACRO STATS ──────────────────────────────── */}
-            <div className="macro-stats-row">
-                {PLATFORM_STATS.map((stat, i) => (
+            <div className="macro-stats-row" style={{ marginBottom: "2.5rem" }}>
+                {platformStats.map((stat, i) => (
                     <div key={i} className="stat-card">
                         <div className="stat-icon-wrapper">{stat.icon}</div>
                         <div className="stat-data">
@@ -163,22 +189,6 @@ export default function InvestorsPage() {
 
             {/* ── DEAL ROOM TABS ─────────────────────────────────────── */}
             <div className="deals-section">
-                <div className="section-header">
-                    <div className="tab-navigation">
-                        <button
-                            className={`tab-btn ${activeTab === 'marketplace' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('marketplace')}
-                        >
-                            Marketplace Deals <span className="count-badge">{marketDeals.length}</span>
-                        </button>
-                        <button
-                            className={`tab-btn ${activeTab === 'portfolio' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('portfolio')}
-                        >
-                            My Portfolio <span className="count-badge">{portfolioDeals.length}</span>
-                        </button>
-                    </div>
-                </div>
 
                 <div className="deals-grid">
                     {/* ── MARKETPLACE VIEW ── */}
@@ -440,12 +450,12 @@ export default function InvestorsPage() {
                                 <div className="ct-row highlight-row">
                                     <span className="shareholder"><IconShield /> Your Entity</span>
                                     <span>Seed Pref</span>
-                                    <span className="ownership auth-text">{(capTableDeal.investedAmount / 3000000).toFixed(2)}%</span>
+                                    <span className="ownership auth-text">{(capTableDeal.amount / (parseFloat(String(capTableDeal.entry_valuation).replace(/[^0-9.]/g, '')) * 1000000 || 5000000) * 100).toFixed(2)}%</span>
                                 </div>
                                 <div className="ct-row">
                                     <span className="shareholder"><IconUsers /> Option Pool</span>
                                     <span>Unissued</span>
-                                    <span className="ownership">{(9.25 - (capTableDeal.investedAmount / 3000000)).toFixed(2)}%</span>
+                                    <span className="ownership">{(10 - (capTableDeal.amount / (parseFloat(String(capTableDeal.entry_valuation).replace(/[^0-9.]/g, '')) * 1000000 || 5000000) * 100)).toFixed(2)}%</span>
                                 </div>
                             </div>
                         </div>
@@ -638,7 +648,15 @@ export default function InvestorsPage() {
 
                 .deal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; }
                 .deal-identity { display: flex; flex-direction: column; gap: 4px; }
-                .deal-identity h3 { font-size: 1.15rem; font-weight: 700; margin: 0; color: #111827; letter-spacing: -0.01em; }
+                .deal-identity h3 { 
+                    font-family: var(--font-geist-sans), "GeistSans Fallback";
+                    font-size: 18px; 
+                    font-weight: 500; 
+                    margin: 0; 
+                    color: rgb(17, 24, 39); 
+                    font-style: normal;
+                    line-height: normal;
+                }
                 .deal-id { font-size: 0.75rem; font-weight: 600; color: #6b7280; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
                 
                 .deal-status {
@@ -661,7 +679,16 @@ export default function InvestorsPage() {
                 .metric-box.box-highlight { background: transparent; }
                 
                 .m-label { font-size: 0.7rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.02em; }
-                .m-value { font-size: 1.15rem; font-weight: 700; color: #111827; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+                .m-value { 
+                    font-family: var(--font-geist-sans), "GeistSans Fallback";
+                    font-size: 18px; 
+                    font-weight: 500; 
+                    color: rgb(17, 24, 39); 
+                    font-style: normal;
+                    line-height: normal;
+                    font-feature-settings: "tnum"; 
+                    font-variant-numeric: tabular-nums; 
+                }
                 .m-value.score { color: #111827; display: flex; align-items: center; gap: 6px; }
                 .m-value.score::after { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
                 .m-value.score-blue { color: #111827; }
@@ -783,7 +810,15 @@ export default function InvestorsPage() {
                     border-radius: 6px;
                     white-space: nowrap;
                 }
-                .modal-header h2 { font-size: 1.4rem; font-weight: 800; color: #111827; margin: 0; letter-spacing: -0.02em; line-height: 1.2; }
+                .modal-header h2 { 
+                    font-family: var(--font-geist-sans), "GeistSans Fallback";
+                    font-size: 18px; 
+                    font-weight: 500; 
+                    color: rgb(17, 24, 39); 
+                    margin: 0; 
+                    font-style: normal;
+                    line-height: normal; 
+                }
                 .modal-meta { display: flex; gap: 1rem; font-size: 0.8rem; color: #6b7280; font-weight: 500; margin-top: 0.5rem; }
                 
                 .modal-body { margin-bottom: 2rem; }

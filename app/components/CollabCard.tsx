@@ -18,7 +18,15 @@ export default function CollabCard({ title, description, impact, author, collabo
         <div className="chart-card collab-showcase-card" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
             <div className="card-header-clean" style={{ marginBottom: "1rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                    <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>{title}</h3>
+                    <h3 style={{
+                        fontFamily: 'var(--font-geist-sans), "GeistSans Fallback"',
+                        fontSize: "18px",
+                        fontWeight: 500,
+                        fontStyle: "normal",
+                        lineHeight: "normal",
+                        color: "rgb(17, 24, 39)",
+                        margin: 0
+                    }}>{title}</h3>
                     <div className="badge-pill" style={{ background: "rgba(187, 244, 81, 0.1)", color: "#749a1d", fontSize: "0.75rem", padding: "4px 8px" }}>
                         ACTIVE
                     </div>
