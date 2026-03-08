@@ -63,10 +63,11 @@ export default function Navbar() {
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
-                                            background: "var(--blue)",
+                                            background: "var(--primary)",
                                             color: "white",
                                             fontSize: "0.8rem",
-                                            fontWeight: "600"
+                                            fontWeight: "600",
+                                            borderRadius: "50%"
                                         }}>
                                             {(user.user_metadata?.full_name || user.email || "U")
                                                 .split(' ')
@@ -76,15 +77,15 @@ export default function Navbar() {
                                                 .slice(0, 2)}
                                         </div>
                                     )}
-                                    <button className="btn-ghost" onClick={handleLogout}>Sign Out</button>
+                                    <button className="btn-ghost" onClick={handleLogout} style={{ fontWeight: 500 }}>Sign Out</button>
                                 </div>
                             ) : (
                                 <>
                                     <Link href="/signin">
-                                        <button className="btn-blue" style={{ marginRight: "0.5rem" }}>Sign In</button>
+                                        <button className="btn-ghost" style={{ marginRight: "0.25rem", padding: "0.5rem 1rem", fontWeight: 500 }}>Sign In</button>
                                     </Link>
                                     <Link href="/get-started">
-                                        <button className="btn-lime">Get Started</button>
+                                        <button className="btn-primary" style={{ padding: "0.5rem 1.25rem" }}>Get Started</button>
                                     </Link>
                                 </>
                             )

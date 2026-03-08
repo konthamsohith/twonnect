@@ -42,7 +42,7 @@ export default function HeroSection() {
                     className="hero-title"
                 >
                     Turn Real Problems <br />
-                    <span className="text-primary">Into Real Startups</span>
+                    <span className="text-secondary-accent" style={{ color: 'var(--accent)' }}>Into Real Startups</span>
                 </motion.h1>
 
                 <motion.p
@@ -62,10 +62,10 @@ export default function HeroSection() {
                     className="btn-group"
                 >
                     <Link href="/auth">
-                        <button className="btn-black btn-lg">Get Started</button>
+                        <button className="btn-primary btn-lg">Get Started</button>
                     </Link>
                     <Link href="#explore">
-                        <button className="btn-outline btn-lg" style={{ borderRadius: '50px', padding: '1rem 2rem', fontWeight: 600 }}>Explore Problems</button>
+                        <button className="btn-outline btn-lg">Explore Problems</button>
                     </Link>
                 </motion.div>
 
@@ -73,30 +73,30 @@ export default function HeroSection() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
-                    className="flow-container"
+                    className="flow-container mx-auto"
                 >
                     <div className="flow-item">
-                        <div className="flow-icon" style={{ background: '#f59e0b' }}><IconLightbulb /></div>
+                        <div className="flow-icon"><IconLightbulb /></div>
                         Problem
                     </div>
                     <div className="flow-connector" />
                     <div className="flow-item">
-                        <div className="flow-icon" style={{ background: '#3b82f6' }}><IconCode /></div>
+                        <div className="flow-icon"><IconCode /></div>
                         Builder
                     </div>
                     <div className="flow-connector" />
                     <div className="flow-item">
-                        <div className="flow-icon" style={{ background: '#10b981' }}><IconBox /></div>
+                        <div className="flow-icon"><IconBox /></div>
                         Solution
                     </div>
                     <div className="flow-connector" />
                     <div className="flow-item">
-                        <div className="flow-icon" style={{ background: '#8b5cf6' }}><IconRocket /></div>
+                        <div className="flow-icon"><IconRocket /></div>
                         Startup
                     </div>
                     <div className="flow-connector" />
                     <div className="flow-item">
-                        <div className="flow-icon" style={{ background: '#000000' }}><IconTrendingUp /></div>
+                        <div className="flow-icon"><IconTrendingUp /></div>
                         Investor
                     </div>
                 </motion.div>

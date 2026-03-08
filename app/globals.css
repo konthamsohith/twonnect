@@ -38,18 +38,29 @@
 }
 
 :root {
-  /* TWONNECT Design System */
-  --background: #f0f7ff;
-  --foreground: #000000;
-  --primary: #007aff;
-  --black: #000000;
+  /* TWONNECT Design System - Refined & Premium */
+  --background: #f8fafc;
+  /* Soft off-white for a calm, human feel */
+  --foreground: #0f172a;
+  /* Deep slate for readable body text */
+  --primary: #0f172a;
+  /* Midnight Navy / Deep Slate for primary brand */
+  --black: #020617;
   --white: #ffffff;
-  --lime: #bbf451;
-  --blue: #007aff;
+  --accent: #f59e0b;
+  /* Warm amber accent for innovation */
+  --secondary-accent: #ff6b6b;
+  /* Soft coral for secondary accents */
   --muted: #64748b;
-  --muted-bg: #f4f7fb;
+  --muted-bg: #f1f5f9;
   --card-bg: #ffffff;
-  --border-color: #e4eaf2;
+  --border-color: #e2e8f0;
+
+  /* Additional variables for layout */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 html {
@@ -185,23 +196,26 @@ a {
 
 .hero {
   text-align: center;
-  padding: 120px 20px;
-  background: radial-gradient(circle at 50% 0%, rgba(255, 99, 33, 0.1) 0%, transparent 60%);
+  padding: 140px 20px 100px;
+  /* Removed generic radial gradient, relying on clean background */
 }
 
 .hero h1 {
-  font-size: 4rem;
+  font-size: 4.5rem;
   margin-bottom: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--primary);
 }
 
 .hero p {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   color: var(--muted);
-  max-width: 600px;
-  margin: 0 auto 2.5rem;
+  max-width: 650px;
+  margin: 0 auto 3rem;
   line-height: 1.6;
+  font-weight: 400;
 }
 
 /* Navbar (Clean/White variant) */
@@ -209,8 +223,8 @@ a {
   position: fixed;
   top: 0;
   left: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #007aff 0%, #bbf451 100%);
+  height: 2px;
+  background: var(--accent);
   z-index: 200;
   transition: width 0.1s linear;
   border-radius: 0 2px 2px 0;
@@ -281,21 +295,22 @@ a {
 .navbar-links a::after {
   content: "";
   position: absolute;
-  bottom: -3px;
-  left: 0;
+  bottom: -4px;
+  left: 50%;
   width: 0;
   height: 2px;
-  background: var(--blue);
+  background: var(--primary);
   border-radius: 1px;
-  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .navbar-links a:hover {
-  color: var(--foreground);
+  color: var(--primary);
 }
 
 .navbar-links a:hover::after {
   width: 100%;
+  left: 0;
 }
 
 .navbar-actions {
@@ -452,8 +467,11 @@ a {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 1.5rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .interactive-card {
@@ -462,8 +480,8 @@ a {
 
 .interactive-card:hover {
   transform: translateY(-4px);
-  border-color: #d1d5db;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  border-color: #cbd5e1;
+  box-shadow: var(--shadow-float);
 }
 
 .card-header {
@@ -532,79 +550,91 @@ a {
 }
 
 /* Buttons for new Aesthetic */
-.btn-black {
-  background: var(--black);
+.btn-primary {
+  background: var(--primary);
   color: var(--white);
-  border-radius: 50px;
-  padding: 0.8rem 1.6rem;
-  font-weight: 600;
-  border: none;
+  border-radius: 8px;
+  /* Square off the buttons for a more professional SaaS look */
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  border: 1px solid var(--primary);
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
   font-size: 0.95rem;
+  box-shadow: var(--shadow-sm);
 }
 
-.btn-black:hover {
-  opacity: 0.8;
+.btn-primary:hover {
+  background-color: var(--black);
+  border-color: var(--black);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
-.btn-lime {
-  background: var(--lime);
-  color: var(--black);
-  border-radius: 50px;
-  padding: 0.8rem 1.6rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s;
-  font-size: 0.95rem;
-}
-
-.btn-lime:hover {
-  transform: scale(1.03);
-}
-
-.btn-blue {
-  background: var(--blue);
+.btn-accent {
+  background: var(--accent);
   color: var(--white);
-  border-radius: 50px;
-  padding: 0.6rem 1.2rem;
-  font-weight: 600;
-  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  border: 1px solid var(--accent);
   cursor: pointer;
-  font-size: 0.9rem;
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-sm);
 }
 
-.btn-blue:hover {
-  opacity: 0.9;
+.btn-accent:hover {
+  background-color: #d97706;
+  /* Darker amber */
+  border-color: #d97706;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-lg {
   padding: 1rem 2rem;
   font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-/* Removed old duplicate buttons from here */
-
 .btn-secondary {
-  background-color: var(--muted-bg);
-  color: var(--foreground);
+  background-color: var(--white);
+  color: var(--primary);
   border-color: var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:hover {
-  background-color: #f3f4f6;
-  border-color: #d1d5db;
+  background-color: var(--background);
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--foreground);
+  color: var(--primary);
   border-color: var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
 }
 
 .btn-outline:hover {
-  border-color: var(--foreground);
+  border-color: var(--primary);
+  background: var(--background);
 }
 
 .btn-ghost {

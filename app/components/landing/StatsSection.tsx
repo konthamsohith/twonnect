@@ -37,7 +37,7 @@ function AnimatedCounter({ value, label }: { value: number; label: string }) {
             className="stat-box"
         >
             <div className="stat-number">{count}{value > 100 ? '+' : ''}</div>
-            <div className="stat-label">{label}</div>
+            <div className="stat-label" style={{ color: 'var(--primary)' }}>{label}</div>
         </motion.div>
     );
 }

@@ -29,11 +29,11 @@ export default function ExploreProblemsSection() {
         <section className="landing-section" id="explore">
             <div className="container">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-                    <div style={{ textAlign: 'left', maxWidth: '600px' }}>
-                        <h2 className="section-title" style={{ textAlign: 'left', marginBottom: '0.5rem' }}>Explore Validated Problems</h2>
-                        <p className="text-muted text-lg">Real pain points submitted by industry experts, waiting for builders.</p>
+                    <div style={{ textAlign: 'left', maxWidth: '650px' }}>
+                        <h2 className="section-title" style={{ textAlign: 'left', marginBottom: '0.75rem' }}>Explore Validated Problems</h2>
+                        <p className="text-muted text-lg" style={{ lineHeight: 1.6 }}>Real pain points submitted by industry experts, waiting for builders.</p>
                     </div>
-                    <button className="btn-outline" style={{ borderRadius: '50px', padding: '0.6rem 1.2rem', whiteSpace: 'nowrap' }}>View All Problems</button>
+                    <button className="btn-outline">View All Problems</button>
                 </div>
 
                 <div className="grid-3">
@@ -50,8 +50,8 @@ export default function ExploreProblemsSection() {
                             <h3 className="problem-title">{problem.title}</h3>
                             <p className="problem-desc">{problem.desc}</p>
                             <div className="problem-meta">
-                                <span><strong style={{ color: 'var(--foreground)' }}>{problem.builders}</strong> Builders Interested</span>
-                                <button className="btn-blue" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}>Solve This</button>
+                                <span><strong style={{ color: 'var(--primary)', fontWeight: 700 }}>{problem.builders}</strong> Builders Interested</span>
+                                <button className="btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}>Solve This</button>
                             </div>
                         </motion.div>
                     ))}

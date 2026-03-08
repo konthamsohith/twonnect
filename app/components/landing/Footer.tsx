@@ -19,9 +19,9 @@ export default function Footer() {
         <footer className="ip-footer">
             <div className="ip-footer-top container">
                 <div className="ip-footer-brand">
-                    <Link href="/" className="ip-footer-logo">
+                    <Link href="/" className="ip-footer-logo" style={{ color: 'var(--primary)' }}>
                         <div className="twonnect-logo">
-                            TWONN<span className="logo-char-e"><div className="logo-e-bar" /><div className="logo-e-bar" /><div className="logo-e-bar" /></span>CT
+                            TWONN<span className="logo-char-e" style={{ color: 'var(--accent)' }}><div className="logo-e-bar" /><div className="logo-e-bar" /><div className="logo-e-bar" /></span>CT
                         </div>
                     </Link>
                     <p className="ip-footer-tagline">
@@ -75,7 +75,7 @@ export default function Footer() {
 
             <div className="ip-footer-bottom container">
                 <p>&copy; {new Date().getFullYear()} TWONNECT. All rights reserved.</p>
-                <p>Designed with ❤️ for Builders.</p>
+                <p style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>Designed with <span style={{ color: 'var(--secondary-accent)' }}>❤️</span> for Builders.</p>
             </div>
         </footer>
     );
