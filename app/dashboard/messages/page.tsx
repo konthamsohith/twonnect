@@ -374,7 +374,7 @@ function MessagesContent() {
             )}
 
             <style jsx>{`
-                .messages-root { display: flex; height: calc(100vh - 80px); background: #fff; border-radius: 16px; overflow: hidden; border: 1px solid #e5e7eb; }
+                .messages-root { display: flex; height: 100vh; background: #fff; overflow: hidden; }
                 .msg-sidebar { width: 320px; border-right: 1px solid #e5e7eb; display: flex; flex-direction: column; background: #fafafa; }
                 .sidebar-top { padding: 1.25rem; border-bottom: 1px solid #e5e7eb; }
                 .sidebar-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }

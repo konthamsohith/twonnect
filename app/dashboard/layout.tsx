@@ -70,11 +70,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { name: "Collaborations", href: "/dashboard/collaborations", icon: <IconCollaborations /> },
         { name: "AI Sandbox", href: "/dashboard/ai-sandbox", icon: <IconAI /> },
         { name: "Investor Portal", href: "/dashboard/investors", icon: <IconInvestors /> },
+        { name: "Network Console", href: "/dashboard/admin", icon: <IconAdmin /> },
         { name: "Messages", href: "/dashboard/messages", icon: <IconMessages /> },
-    ];
-
-    const adminNavItems = [
-        { name: "Requests", href: "/dashboard/admin", icon: <IconAdmin /> },
     ];
 
     const secondaryNav = [
@@ -105,22 +102,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         ))}
 
                         <div style={{ margin: "1.25rem 0 0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", paddingLeft: "1rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                            Admin
-                        </div>
-
-                        {adminNavItems.map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className={`nav-item ${pathname === item.href ? "active" : ""}`}
-                            >
-                                <span>{item.icon}</span>
-                                {item.name}
-                            </Link>
-                        ))}
-
-                        <div style={{ margin: "1.25rem 0 0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", paddingLeft: "1rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                            Management
+                            Settings
                         </div>
 
                         {secondaryNav.map((item) => (
@@ -158,7 +140,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
             <main
                 className="main-content"
-                style={(isSettingsPage || pathname === "/dashboard/ai-sandbox") ? { marginLeft: pathname === "/dashboard/ai-sandbox" ? undefined : 0, padding: 0 } : {}}
+                style={(isSettingsPage || pathname === "/dashboard/ai-sandbox" || pathname === "/dashboard/messages") ? { marginLeft: (pathname === "/dashboard/ai-sandbox" || pathname === "/dashboard/messages") ? undefined : 0, padding: 0 } : {}}
             >
                 {children}
             </main>

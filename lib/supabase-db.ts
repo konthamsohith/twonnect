@@ -19,9 +19,10 @@ export interface Idea {
     created_at: string;
     author_name: string;
     target_audience?: "Developer" | "Investor";
-    valuation?: string;
-    funding_required?: string;
+    valuation?: string | number;
+    funding_required?: string | number;
     equity_offered?: string;
+    amount_raised?: number;
 }
 
 export interface Chat {
@@ -392,8 +393,51 @@ export interface CollaborationRequest {
     message: string;
     created_at: string;
     idea_title?: string;
+    idea_author_id?: string;
     user_email?: string;
+    user_full_name?: string;
+    user_avatar_url?: string;
 }
+
+export interface Investment {
+    id?: number;
+    user_id: string;
+    idea_id: string;
+    amount: number;
+    entry_valuation: string;
+    status: string;
+    created_at?: string;
+    idea_title?: string;
+    idea_description?: string;
+}
+
+/**
+ * Fetches outbound collaboration requests sent by the user.
+ */
+export const getOutboundCollaborationRequests = async (userId: string) => {
+    if (!supabase) return [];
+    try {
+        const { data, error } = await supabase
+            .from("collaboration_requests")
+            .select(`
+                *,
+                ideas (title, author_id)
+            `)
+            .eq("user_id", userId)
+            .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        return data.map(req => ({
+            ...req,
+            idea_title: (req.ideas as any)?.title,
+            idea_author_id: (req.ideas as any)?.author_id
+        })) as CollaborationRequest[];
+    } catch (error) {
+        console.error("Error fetching outbound requests:", JSON.stringify(error, null, 2));
+        return [];
+    }
+};
 
 /**
  * Resets unread count for a chat in the database.
@@ -448,20 +492,19 @@ export const getInboundCollaborationRequests = async (ownerId: string) => {
             .from("collaboration_requests")
             .select(`
                 *,
-                ideas (title)
+                ideas (title),
+                profiles!user_id (full_name, avatar_url)
             `)
             .in("idea_id", ideaIds)
-            .eq("status", "pending")
             .order("created_at", { ascending: false });
 
         if (error) throw error;
 
-        // Note: Map data to include titles if needed, or rely on join
         return data.map(req => ({
             ...req,
             idea_title: (req.ideas as any)?.title,
-            // Since we don't have a direct join to auth.users easily here without more setup, 
-            // we'll just return user_id as email for now or fetch profiles if needed.
+            user_full_name: (req.profiles as any)?.full_name,
+            user_avatar_url: (req.profiles as any)?.avatar_url
         })) as CollaborationRequest[];
     } catch (error) {
         console.error("Error fetching inbound requests:", JSON.stringify(error, null, 2));
@@ -624,6 +667,72 @@ export const getChatParticipants = async (chatId: number) => {
     } catch (error) {
         console.error("Error fetching chat participants:", error);
         return [];
+    }
+};
+
+/**
+ * Creates a new investment record.
+ */
+export const createInvestment = async (investmentData: Omit<Investment, "id" | "created_at">) => {
+    if (!supabase) return null;
+    try {
+        const { data, error } = await supabase
+            .from("investments")
+            .insert([investmentData])
+            .select()
+            .single();
+
+        if (error) throw error;
+        return data as Investment;
+    } catch (error) {
+        console.error("Error creating investment:", JSON.stringify(error, null, 2));
+        return null;
+    }
+};
+
+/**
+ * Fetches user's investments and joined venture data.
+ */
+export const getUserInvestments = async (userId: string) => {
+    if (!supabase) return [];
+    try {
+        const { data, error } = await supabase
+            .from("investments")
+            .select(`
+                *,
+                ideas (title, description)
+            `)
+            .eq("user_id", userId)
+            .order("created_at", { ascending: false });
+
+        if (error) throw error;
+        return data.map(inv => ({
+            ...inv,
+            idea_title: (inv.ideas as any)?.title,
+            idea_description: (inv.ideas as any)?.description
+        })) as Investment[];
+    } catch (error) {
+        console.error("Error fetching user investments:", JSON.stringify(error, null, 2));
+        return [];
+    }
+};
+
+/**
+ * Deletes an investment record.
+ */
+export const deleteInvestment = async (investmentId: number) => {
+    if (!supabase) return false;
+    try {
+        const { error } = await supabase
+            .from("investments")
+            .delete()
+            .eq("id", investmentId);
+
+        if (error) throw error;
+        return true;
+    } catch (error) {
+        console.error("Error deleting investment:", JSON.stringify(error, null, 2));
+        return false;
     }
 };
 

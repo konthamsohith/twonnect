@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getCollaborativeIdeas, Idea, createInvestment, getUserInvestments, Investment, deleteInvestment } from "@/lib/supabase-db";
+import { useAuth } from "@/context/AuthContext";
 
 // ── Icons (Institutional Standard) ──────────────────────────────
 const IconTrendingUp = () => (
@@ -19,9 +21,6 @@ const IconCheckCircle = () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
 );
 
-import { getCollaborativeIdeas, Idea } from "@/lib/supabase-db";
-
-// ── Mock Data for Deal Room (Portfolio Remains Static for Now) ─────────────────────────────────────
 const PLATFORM_STATS = [
     { label: "Total Capital Deployed", value: "$124.5M", icon: <IconBriefcase /> },
     { label: "Active Syndicates", value: "342", icon: <IconUsers /> },
@@ -29,60 +28,54 @@ const PLATFORM_STATS = [
 ];
 
 export default function InvestorsPage() {
-    const [activeTab, setActiveTab] = React.useState<'marketplace' | 'portfolio'>('marketplace');
-    const [marketDeals, setMarketDeals] = React.useState<any[]>([]);
-    const [portfolioDeals, setPortfolioDeals] = React.useState<any[]>([]);
-    const [loading, setLoading] = React.useState(true);
+    const { user } = useAuth();
+    const [activeTab, setActiveTab] = useState<'marketplace' | 'portfolio'>('marketplace');
+    const [marketDeals, setMarketDeals] = useState<any[]>([]);
+    const [portfolioDeals, setPortfolioDeals] = useState<Investment[]>([]);
+    const [loading, setLoading] = useState(true);
 
     // Modal States
-    const [reviewDeal, setReviewDeal] = React.useState<any | null>(null);
-    const [investDeal, setInvestDeal] = React.useState<any | null>(null);
-    const [capTableDeal, setCapTableDeal] = React.useState<any | null>(null);
-    const [exitDeal, setExitDeal] = React.useState<any | null>(null);
-    const [exitMode, setExitMode] = React.useState<'exit' | 'no-interest'>('exit');
-    const [investAmount, setInvestAmount] = React.useState<string>("250,000");
+    const [reviewDeal, setReviewDeal] = useState<any | null>(null);
+    const [investDeal, setInvestDeal] = useState<any | null>(null);
+    const [capTableDeal, setCapTableDeal] = useState<any | null>(null);
+    const [exitDeal, setExitDeal] = useState<any | null>(null);
+    const [exitMode, setExitMode] = useState<'exit' | 'no-interest'>('exit');
+    const [investAmount, setInvestAmount] = useState<string>("250,000");
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchDeals = async () => {
+            if (!user?.id) return;
             setLoading(true);
             try {
-                // Read local portfolio securely
-                let storedPortfolio: any[] = [];
-                const localData = localStorage.getItem("investor_portfolio");
-                if (localData) {
-                    storedPortfolio = JSON.parse(localData);
-                    setPortfolioDeals(storedPortfolio);
-                }
+                const portfolio = await getUserInvestments(user.id);
+                setPortfolioDeals(portfolio);
 
-                // Fetch public/collaborative ideas from Supabase
                 const collaborativeIdeas = await getCollaborativeIdeas();
-
-                // Filter out ideas that already exist in the user's portfolio
                 const uninvestedIdeas = collaborativeIdeas.filter(idea =>
-                    !storedPortfolio.find(p => p.id === ((idea.id || "").substring(0, 8).toUpperCase()))
+                    !portfolio.find(p => p.idea_id === idea.id)
                 );
 
-                // Map to Deal Room format with synthetic funding data
                 const formattedDeals = uninvestedIdeas.map((idea: Idea) => {
-                    // Generate a deterministic-ish score between 75 and 99 based on title length
                     const score = 75 + ((idea.title.length * 3) % 25);
-                    // Generate synthetic target between 500k and 3M based vaguely on score
-                    const baseTarget = 500000 + ((score - 75) * 100000);
-                    // Generate synthetic raised amount
-                    const raised = baseTarget * (0.2 + ((idea.description.length % 10) / 15)); // 20% to ~85% raised
+                    const target = typeof idea.funding_required === 'number' ? idea.funding_required :
+                        (typeof idea.funding_required === 'string' ? parseInt(idea.funding_required.replace(/[^0-9]/g, '')) :
+                            (500000 + ((score - 75) * 100000)));
+
+                    const raised = idea.amount_raised || (target * (0.2 + ((idea.description.length % 10) / 15)));
 
                     return {
-                        id: (idea.id || "").substring(0, 8).toUpperCase(),
+                        id: idea.id,
+                        shortId: (idea.id || "").substring(0, 8).toUpperCase(),
                         name: idea.title,
                         oneLiner: idea.description.length > 80 ? idea.description.substring(0, 77) + "..." : idea.description,
                         fullDescription: idea.description,
                         authorName: idea.author_name,
-                        raised: raised,
-                        target: baseTarget,
-                        valuation: `$${(baseTarget * 5 / 1000000).toFixed(1)}M Post-Money`,
+                        raised: Number(raised),
+                        target: Number(target),
+                        valuation: idea.valuation ? (typeof idea.valuation === 'number' ? `$${(idea.valuation / 1000000).toFixed(1)}M` : idea.valuation) : `$${(Number(target) * 5 / 1000000).toFixed(1)}M Post-Money`,
                         validationScore: score,
-                        momentum: "+145% MoM Data Volume", // Synthetic placeholder matching institutional style
-                        status: raised / baseTarget > 0.8 ? "Closing Soon" : "Active"
+                        momentum: "+145% MoM Data Volume",
+                        status: Number(raised) / Number(target) > 0.8 ? "Closing Soon" : "Active"
                     };
                 });
 
@@ -95,15 +88,15 @@ export default function InvestorsPage() {
         };
 
         fetchDeals();
-    }, []);
+    }, [user?.id]);
 
     const handleInvestClick = (deal: any) => {
         setInvestDeal(deal);
         setInvestAmount("250,000");
     };
 
-    const confirmInvestment = () => {
-        if (!investDeal) return;
+    const confirmInvestment = async () => {
+        if (!investDeal || !user?.id) return;
 
         const investedAmount = parseInt(investAmount.replace(/,/g, ''), 10);
         if (isNaN(investedAmount) || investedAmount < 1000) {
@@ -111,28 +104,23 @@ export default function InvestorsPage() {
             return;
         }
 
-        // Generate portfolio-specific data
-        const newPortfolioItem = {
-            id: investDeal.id,
-            name: investDeal.name,
-            oneLiner: investDeal.oneLiner,
-            investedAmount: investedAmount,
-            currentValue: investedAmount, // On day 1, value is what you put in
-            entryValuation: investDeal.valuation,
-            currentValuation: investDeal.valuation, // On day 1, implied matches entry
-            roi: "+0%",
-            update: "Investment finalized. Terms executed.",
+        const investmentData = {
+            user_id: user.id,
+            idea_id: investDeal.id,
+            amount: investedAmount,
+            entry_valuation: investDeal.valuation,
             status: "Performing"
         };
 
-        // Update local storage
-        const updatedPortfolio = [...portfolioDeals, newPortfolioItem];
-        localStorage.setItem("investor_portfolio", JSON.stringify(updatedPortfolio));
-
-        // Update states to trigger UI migration
-        setPortfolioDeals(updatedPortfolio);
-        setMarketDeals(prev => prev.filter(d => d.id !== investDeal.id));
-        setInvestDeal(null);
+        const result = await createInvestment(investmentData);
+        if (result) {
+            setPortfolioDeals(prev => [...prev, { ...result, idea_title: investDeal.name, idea_description: investDeal.fullDescription }]);
+            setMarketDeals(prev => prev.filter(d => d.id !== investDeal.id));
+            setInvestDeal(null);
+            alert("Investment finalized. Transaction recorded in the secure ledger.");
+        } else {
+            alert("Transaction failed. Peer node rejected the signatures.");
+        }
     };
 
     const handleExit = (deal: any, mode: 'exit' | 'no-interest') => {
@@ -140,12 +128,16 @@ export default function InvestorsPage() {
         setExitMode(mode);
     };
 
-    const confirmExit = () => {
-        if (!exitDeal) return;
-        const updatedPortfolio = portfolioDeals.filter((d: any) => d.id !== exitDeal.id);
-        setPortfolioDeals(updatedPortfolio);
-        localStorage.setItem("investor_portfolio", JSON.stringify(updatedPortfolio));
-        setExitDeal(null);
+    const confirmExit = async () => {
+        if (!exitDeal?.id) return;
+        const success = await deleteInvestment(exitDeal.id);
+        if (success) {
+            setPortfolioDeals(prev => prev.filter(d => d.id !== exitDeal.id));
+            // Add back to marketplace if it was an exit (simplified for demo)
+            setExitDeal(null);
+        } else {
+            alert("Exit failed. Transaction could not be finalized.");
+        }
     };
 
     return (
@@ -211,7 +203,7 @@ export default function InvestorsPage() {
                             <div key={deal.id} className="deal-card">
                                 <div className="deal-header">
                                     <div className="deal-identity">
-                                        <span className="deal-id">{deal.id}</span>
+                                        <span className="deal-id">{deal.shortId}</span>
                                         <h3>{deal.name}</h3>
                                     </div>
                                     <div className={`deal-status ${deal.status === 'Closing Soon' ? 'status-urgent' : ''}`}>
@@ -266,61 +258,66 @@ export default function InvestorsPage() {
                         </div>
                     )}
 
-                    {activeTab === 'portfolio' && portfolioDeals.map((portfolio) => (
-                        <div key={portfolio.id} className="deal-card portfolio-card">
-                            <div className="deal-header">
-                                <div className="deal-identity">
-                                    <h3>{portfolio.name}</h3>
-                                    <span className="deal-id">{portfolio.id}</span>
+                    {activeTab === 'portfolio' && portfolioDeals.map((portfolio) => {
+                        const roi = "+0%"; // Static for demo purposes
+                        const currentValue = portfolio.amount;
+
+                        return (
+                            <div key={portfolio.id} className="deal-card portfolio-card">
+                                <div className="deal-header">
+                                    <div className="deal-identity">
+                                        <h3>{portfolio.idea_title}</h3>
+                                        <span className="deal-id">{(portfolio.idea_id || "").substring(0, 8).toUpperCase()}</span>
+                                    </div>
+                                    <div className={`deal-status ${portfolio.status === 'Outperforming' ? 'status-stellar' : 'status-ok'}`}>
+                                        <IconCheckCircle /> {portfolio.status}
+                                    </div>
                                 </div>
-                                <div className={`deal-status ${portfolio.status === 'Outperforming' ? 'status-stellar' : 'status-ok'}`}>
-                                    <IconCheckCircle /> {portfolio.status}
+
+                                <p className="deal-pitch">{portfolio.idea_description?.substring(0, 100)}...</p>
+
+                                {/* Portfolio Metrics Grid */}
+                                <div className="deal-metrics-grid">
+                                    <div className="metric-box box-highlight">
+                                        <span className="m-label">Multiple / ROI</span>
+                                        <span className="m-value score-blue">{roi}</span>
+                                    </div>
+                                    <div className="metric-box">
+                                        <span className="m-label">Current Value</span>
+                                        <span className="m-value">${(currentValue / 1000).toFixed(0)}k</span>
+                                    </div>
+                                </div>
+
+                                {/* Momentum Summary */}
+                                <div className="portfolio-update">
+                                    <span className="update-label">Latest Update:</span>
+                                    <span className="update-text">Investment finalized. Secure node record active.</span>
+                                </div>
+
+                                {/* Investment Details */}
+                                <div className="investment-details">
+                                    <div className="detail-row">
+                                        <span className="d-label">Capital Deployed</span>
+                                        <span className="d-value">${(portfolio.amount / 1000).toFixed(0)}k</span>
+                                    </div>
+                                    <div className="detail-row">
+                                        <span className="d-label">Entry Valuation</span>
+                                        <span className="d-value">{portfolio.entry_valuation}</span>
+                                    </div>
+                                    <div className="detail-row">
+                                        <span className="d-label">Implied Valuation</span>
+                                        <span className="d-value auth-text">{portfolio.entry_valuation}</span>
+                                    </div>
+                                </div>
+
+                                <div className="deal-actions portfolio-actions">
+                                    <button className="btn-review" onClick={() => setCapTableDeal(portfolio)}>View Cap Table</button>
+                                    <button className="btn-exit" onClick={() => handleExit(portfolio, 'exit')}>Exit Position</button>
+                                    <button className="btn-no-interest" onClick={() => handleExit(portfolio, 'no-interest')}>No Interest</button>
                                 </div>
                             </div>
-
-                            <p className="deal-pitch">{portfolio.oneLiner}</p>
-
-                            {/* Portfolio Metrics Grid */}
-                            <div className="deal-metrics-grid">
-                                <div className="metric-box box-highlight">
-                                    <span className="m-label">Multiple / ROI</span>
-                                    <span className="m-value score-blue">{portfolio.roi}</span>
-                                </div>
-                                <div className="metric-box">
-                                    <span className="m-label">Current Value</span>
-                                    <span className="m-value">${(portfolio.currentValue / 1000).toFixed(0)}k</span>
-                                </div>
-                            </div>
-
-                            {/* Momentum Summary */}
-                            <div className="portfolio-update">
-                                <span className="update-label">Latest Update:</span>
-                                <span className="update-text">{portfolio.update}</span>
-                            </div>
-
-                            {/* Investment Details */}
-                            <div className="investment-details">
-                                <div className="detail-row">
-                                    <span className="d-label">Capital Deployed</span>
-                                    <span className="d-value">${(portfolio.investedAmount / 1000).toFixed(0)}k</span>
-                                </div>
-                                <div className="detail-row">
-                                    <span className="d-label">Entry Valuation</span>
-                                    <span className="d-value">{portfolio.entryValuation}</span>
-                                </div>
-                                <div className="detail-row">
-                                    <span className="d-label">Implied Valuation</span>
-                                    <span className="d-value auth-text">{portfolio.currentValuation}</span>
-                                </div>
-                            </div>
-
-                            <div className="deal-actions portfolio-actions">
-                                <button className="btn-review" onClick={() => setCapTableDeal(portfolio)}>View Cap Table</button>
-                                <button className="btn-exit" onClick={() => handleExit(portfolio, 'exit')}>Exit Position</button>
-                                <button className="btn-no-interest" onClick={() => handleExit(portfolio, 'no-interest')}>No Interest</button>
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
 
