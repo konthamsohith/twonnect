@@ -3,85 +3,106 @@
 import React, { useEffect, useRef } from "react";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 
+/**
+ * High-fidelity VideoCallUI integration for Teams-style interface.
+ * Hardened against Next.js re-renders and Zego internal telemetry race conditions.
+ */
 export default function VideoCallUI({
     roomID,
     userID,
     userName,
     mode = "GroupCall", // 'OneONoneCall' or 'GroupCall'
+    initialMode = "video", // 'video' or 'audio'
 }: {
     roomID: string;
     userID: string;
     userName: string;
     mode?: "OneONoneCall" | "GroupCall";
+    initialMode?: "video" | "audio";
 }) {
     const containerRef = useRef<HTMLDivElement>(null);
-
     const zpRef = useRef<any>(null);
 
     useEffect(() => {
-        if (!containerRef.current) return;
+        let active = true;
 
-        // Fetch credentials from env
-        const appID = Number(process.env.NEXT_PUBLIC_ZEGO_APP_ID);
-        // Note: For production, do NOT expose SERVER_SECRET to the client. This is for testing/demo.
-        // We will fetch the token from an API route.
-        const serverSecret = process.env.NEXT_PUBLIC_ZEGO_SERVER_SECRET || "f4756ef508c33ea959b127f24f9787bd";
+        const initSession = async () => {
+            // Small initial tick delay to escape React's double-mount/commit cycle in dev
+            await new Promise(resolve => setTimeout(resolve, 50));
 
-        if (!appID) {
-            console.error("Missing Zego APP ID");
-            return;
-        }
+            if (!containerRef.current || !active) return;
 
-        const runZego = async () => {
-            // Clean up any existing instance before starting a new one
-            if (zpRef.current) {
-                zpRef.current.destroy();
-            }
+            try {
+                const appID = Number(process.env.NEXT_PUBLIC_ZEGO_APP_ID);
+                const serverSecret = process.env.NEXT_PUBLIC_ZEGO_SERVER_SECRET || "f4756ef508c33ea959b127f24f9787bd";
 
-            // 1. Generate a Kit Token for test
-            const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-                appID,
-                serverSecret,
-                roomID,
-                userID,
-                userName
-            );
+                if (!appID) {
+                    console.error("[Zego] No App ID configured");
+                    return;
+                }
 
-            // 2. Create instance object from kit token
-            const zp = ZegoUIKitPrebuilt.create(kitToken);
-            zpRef.current = zp;
+                const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+                    appID, serverSecret, roomID, userID, userName
+                );
 
-            // 3. Start the call
-            zp.joinRoom({
-                container: containerRef.current,
-                sharedLinks: [
-                    {
-                        name: 'Copy Call Link',
+                if (!active) return;
+
+                const zp = ZegoUIKitPrebuilt.create(kitToken);
+                zpRef.current = zp;
+
+                if (!active) {
+                    zp.destroy();
+                    zpRef.current = null;
+                    return;
+                }
+
+                zp.joinRoom({
+                    container: containerRef.current,
+                    sharedLinks: [{
+                        name: 'Internal Link',
                         url: window.location.origin + window.location.pathname + '?roomID=' + roomID,
+                    }],
+                    scenario: {
+                        mode: mode === "OneONoneCall" ? ZegoUIKitPrebuilt.OneONoneCall : ZegoUIKitPrebuilt.GroupCall,
                     },
-                ],
-                scenario: {
-                    mode: mode === "OneONoneCall" ? ZegoUIKitPrebuilt.OneONoneCall : ZegoUIKitPrebuilt.GroupCall,
-                },
-                showScreenSharingButton: true, // Enable screen sharing
-                showPreJoinView: false,
-                turnOnMicrophoneWhenJoining: false,
-                turnOnCameraWhenJoining: false,
-            });
+                    showScreenSharingButton: true,
+                    showPreJoinView: false,
+                    turnOnMicrophoneWhenJoining: true,
+                    turnOnCameraWhenJoining: initialMode === "video",
+                    showTextChat: false,
+                    showUserList: false,
+                    maxUsers: 2,
+                    layout: "Auto",
+                    showLayoutButton: false,
+                });
+            } catch (err) {
+                console.warn("[Zego] Initialization warning:", err);
+            }
         };
 
-        runZego();
+        initSession();
 
         return () => {
-            if (zpRef.current) {
-                zpRef.current.destroy();
+            active = false;
+            // Immediate destruction can sometimes trigger 'createSpan' null errors 
+            // if the internal telemetry hasn't finished its setup tick.
+            const instance = zpRef.current;
+            if (instance) {
+                try {
+                    instance.destroy();
+                } catch (e) {
+                    console.warn("[Zego] Cleanup suppressed:", e);
+                }
                 zpRef.current = null;
             }
         };
-
-    }, [roomID, userID, userName, mode]);
+    }, [roomID, userID, userName, mode, initialMode]);
 
     return (
-        <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
+        <div
+            ref={containerRef}
+            className="video-ui-container"
+            style={{ width: "100%", height: "100%", borderRadius: '12px', overflow: 'hidden' }}
+        />
     );
 }

@@ -258,94 +258,139 @@ function MessagesContent() {
             {/* ── MAIN ── */}
             <main className="msg-main">
                 {activeChat ? (
-                    <>
-                        <div className="chat-header">
-                            <div className="chat-header-left">
-                                <div className="avatar" style={{ background: getAvatar(activeChat.tag).bg, color: getAvatar(activeChat.tag).color }}>
-                                    {activeChat.type === 'dm' && participants.find(p => p.user_id !== user?.id)?.avatar_url
-                                        ? <img src={participants.find(p => p.user_id !== user?.id)?.avatar_url} />
-                                        : (activeChat.type === 'dm' ? (participants.find(p => p.user_id !== user?.id)?.full_name?.[0] || activeChat.name[0]) : getAvatar(activeChat.tag).icon)}
-                                </div>
-                                <div>
-                                    <div className="ch-name">
-                                        {activeChat.type === 'dm' ? (participants.find(p => p.user_id !== user?.id)?.full_name || activeChat.name) : activeChat.name}
+                    callMode !== "none" ? (
+                        <div className="teams-call-stage">
+                            {/* Teams Top Bar */}
+                            <div className="teams-call-header">
+                                <div className="teams-meeting-title">
+                                    <div className="teams-icon-users">
+                                        <IconUsers />
                                     </div>
-                                    <div className="ch-role">{activeChat.role}</div>
+                                    <span>Meeting with {activeChat.type === 'dm' ? (participants.find(p => p.user_id !== user?.id)?.full_name || activeChat.name) : activeChat.name}</span>
+                                </div>
+                                <div className="teams-metadata">
+                                    <div className="teams-timer">00:12:44</div>
+                                    <div className="teams-encryption">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="chat-header-right">
-                                <button className="btn-call" onClick={() => startCall("audio")}><IconPhone /></button>
-                                <button className="btn-call" onClick={() => startCall("video")}><IconVideo /></button>
-                                <button className={`btn-call ${showParticipants ? 'active' : ''}`} onClick={() => setShowParticipants(!showParticipants)}><IconUsers /></button>
-                                <div className={`chat-tag-pill tag-${activeChat.tag}`}>
-                                    {activeChat.tag === 'ai' ? 'AI' : activeChat.tag === 'investor' ? 'Investor' : activeChat.tag === 'group' ? 'Project' : 'Co-founder'}
-                                </div>
-                            </div>
-                        </div>
 
-                        {callMode !== "none" ? (
-                            <div className="call-container">
+                            <div className="teams-video-frame">
                                 <VideoCallUI
+                                    key={roomID}
                                     roomID={roomID}
                                     userID={user?.id || "anon"}
                                     userName={user?.user_metadata?.full_name || "User"}
                                     mode="OneONoneCall"
+                                    initialMode={callMode as "video" | "audio"}
                                 />
-                                <button className="btn-end-call" onClick={endCall}>End Call</button>
+
+                                {/* Floating Teams Controls */}
+                                <div className="teams-floating-controls">
+                                    <div className="control-group">
+                                        <button className="teams-btn-round" title="Toggle Microphone"><IconPhone /></button>
+                                        <button className="teams-btn-round" title="Toggle Camera"><IconVideo /></button>
+                                        <button className="teams-btn-round" title="Share Screen">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
+                                        </button>
+                                        <button className="teams-btn-round" title="More Actions">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg>
+                                        </button>
+                                    </div>
+                                    <div className="divider-teams"></div>
+                                    <button className="teams-btn-leave" onClick={endCall}>Leave</button>
+                                </div>
                             </div>
-                        ) : (
-                            <>
-                                <div className="messages-area">
-                                    {messages.map(msg => (
-                                        <div key={msg.id} className={`msg-row ${msg.sender_id === user?.id ? 'msg-me' : 'msg-them'}`}>
-                                            {msg.sender_id !== user?.id && (
-                                                <div className="avatar sm" style={{ background: getAvatar(activeChat.tag).bg, color: getAvatar(activeChat.tag).color }}>
-                                                    {getAvatar(activeChat.tag).icon}
-                                                </div>
-                                            )}
-                                            <div className="bubble-wrap">
-                                                <div className={`bubble ${msg.sender_id === user?.id ? 'bubble-me' : 'bubble-them'}`}>
-                                                    {msg.text.startsWith("CALL_SIGNAL:") ? (
-                                                        <div className="call-signal-msg">
-                                                            <div className="call-icon-pulse"><IconPhone /></div>
-                                                            <p>Incoming {msg.text.split(':')[1]} call...</p>
-                                                            {msg.sender_id !== user?.id && (
-                                                                <button className="btn-join-call" onClick={() => { setRoomID(msg.text.split(':')[2]); setCallMode(msg.text.split(':')[1] as any); }}>Join Call</button>
-                                                            )}
-                                                        </div>
-                                                    ) : msg.text.startsWith("CALL_ENDED:") ? (
-                                                        <div className="call-ended-msg">
-                                                            <IconPhoneOff />
-                                                            <span>Call ended</span>
-                                                        </div>
-                                                    ) : (
-                                                        msg.sender_id === 'ai_bot' ? <div className="markdown-content"><ReactMarkdown>{msg.text}</ReactMarkdown></div> : msg.text
-                                                    )}
-                                                </div>
-                                                <span className="msg-time">{formatTime(msg.created_at)}</span>
+                        </div>
+                    ) : (
+                        <>
+                            <div className="chat-header">
+                                <div className="chat-header-left">
+                                    <div className="avatar" style={{ background: getAvatar(activeChat.tag).bg, color: getAvatar(activeChat.tag).color }}>
+                                        {activeChat.type === 'dm' && participants.find(p => p.user_id !== user?.id)?.avatar_url
+                                            ? <img src={participants.find(p => p.user_id !== user?.id)?.avatar_url} />
+                                            : (activeChat.type === 'dm' ? (participants.find(p => p.user_id !== user?.id)?.full_name?.[0] || activeChat.name[0]) : getAvatar(activeChat.tag).icon)}
+                                    </div>
+                                    <div>
+                                        <div className="ch-name">
+                                            {activeChat.type === 'dm' ? (participants.find(p => p.user_id !== user?.id)?.full_name || activeChat.name) : activeChat.name}
+                                        </div>
+                                        <div className="ch-role">{activeChat.role}</div>
+                                    </div>
+                                </div>
+                                <div className="chat-header-right">
+                                    <button className="btn-call" onClick={() => startCall("audio")}><IconPhone /></button>
+                                    <button className="btn-call" onClick={() => startCall("video")}><IconVideo /></button>
+                                    <button className={`btn-call ${showParticipants ? 'active' : ''}`} onClick={() => setShowParticipants(!showParticipants)}><IconUsers /></button>
+                                    <div className={`chat-tag-pill tag-${activeChat.tag}`}>
+                                        {activeChat.tag === 'ai' ? 'AI' : activeChat.tag === 'investor' ? 'Investor' : activeChat.tag === 'group' ? 'Project' : 'Co-founder'}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="messages-area">
+                                {messages.map(msg => (
+                                    <div key={msg.id} className={`msg-row ${msg.sender_id === user?.id ? 'msg-me' : 'msg-them'}`}>
+                                        {msg.sender_id !== user?.id && (
+                                            <div className="avatar sm" style={{ background: getAvatar(activeChat.tag).bg, color: getAvatar(activeChat.tag).color }}>
+                                                {getAvatar(activeChat.tag).icon}
                                             </div>
+                                        )}
+                                        <div className="bubble-wrap">
+                                            <div className={`bubble ${msg.sender_id === user?.id ? 'bubble-me' : 'bubble-them'}`}>
+                                                {msg.text.startsWith("CALL_SIGNAL:") ? (
+                                                    <div className="call-signal-msg">
+                                                        <div className="call-info">
+                                                            <div className="call-icon-pulse">
+                                                                <IconPhone />
+                                                                <div className="pulse-ring"></div>
+                                                            </div>
+                                                            <div className="call-text">
+                                                                <h3>Incoming {msg.text.split(':')[1]} call</h3>
+                                                                <p>Room ID: {msg.text.split(':')[2].slice(0, 8)}...</p>
+                                                            </div>
+                                                        </div>
+                                                        {msg.sender_id !== user?.id && (
+                                                            <button className="btn-join-call" onClick={() => { setRoomID(msg.text.split(':')[2]); setCallMode(msg.text.split(':')[1] as any); }}>
+                                                                Join Call
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                ) : msg.text.startsWith("CALL_ENDED:") ? (
+                                                    <div className="call-ended-msg">
+                                                        <div className="ended-icon-box">
+                                                            <IconPhoneOff />
+                                                        </div>
+                                                        <span>Call session ended</span>
+                                                    </div>
+                                                ) : (
+                                                    msg.sender_id === 'ai_bot' ? <div className="markdown-content"><ReactMarkdown>{msg.text}</ReactMarkdown></div> : msg.text
+                                                )}
+                                            </div>
+                                            <span className="msg-time">{formatTime(msg.created_at)}</span>
                                         </div>
-                                    ))}
-                                    {isTyping && (
-                                        <div className="msg-row msg-them">
-                                            <div className="bubble-wrap"><div className="bubble bubble-them">AI is typing...</div></div>
-                                        </div>
-                                    )}
-                                    <div ref={messagesEndRef} />
-                                </div>
-                                <div className="compose-bar">
-                                    <input
-                                        className="compose-input"
-                                        placeholder="Type a message..."
-                                        value={input}
-                                        onChange={e => setInput(e.target.value)}
-                                        onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
-                                    />
-                                    <button className="btn-send" onClick={sendMessage} disabled={!input.trim()}><IconSend /> <span>Send</span></button>
-                                </div>
-                            </>
-                        )}
-                    </>
+                                    </div>
+                                ))}
+                                {isTyping && (
+                                    <div className="msg-row msg-them">
+                                        <div className="bubble-wrap"><div className="bubble bubble-them">AI is typing...</div></div>
+                                    </div>
+                                )}
+                                <div ref={messagesEndRef} />
+                            </div>
+                            <div className="compose-bar">
+                                <input
+                                    className="compose-input"
+                                    placeholder="Type a message..."
+                                    value={input}
+                                    onChange={e => setInput(e.target.value)}
+                                    onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
+                                />
+                                <button className="btn-send" onClick={sendMessage} disabled={!input.trim()}><IconSend /> <span>Send</span></button>
+                            </div>
+                        </>
+                    )
                 ) : (
                     <div className="empty-state">
                         <div className="empty-icon"><IconMessage /></div>
@@ -423,8 +468,210 @@ function MessagesContent() {
                 .p-info { font-size: 0.85rem; }
                 .p-name { font-weight: 600; }
                 .p-status { font-size: 0.7rem; color: #6b7280; }
-                .call-container { flex: 1; background: #000; position: relative; }
-                .btn-end-call { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: #ef4444; color: #fff; border: none; padding: 8px 20px; border-radius: 20px; font-weight: 700; cursor: pointer; }
+                .teams-call-stage {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    background: #201f1f;
+                    position: relative;
+                }
+                .teams-call-header {
+                    height: 48px;
+                    background: #1b1a1a;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0 1rem;
+                    border-bottom: 1px solid rgba(255,255,255,0.05);
+                }
+                .teams-meeting-title {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    color: #fff;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                }
+                .teams-icon-users {
+                    width: 24px;
+                    height: 24px;
+                    background: #464775;
+                    border-radius: 4px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #fff;
+                    transform: scale(0.8);
+                }
+                .teams-metadata {
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                    color: #fff;
+                    font-size: 0.8rem;
+                }
+                .teams-video-frame {
+                    flex: 1;
+                    position: relative;
+                    display: flex;
+                    align-items: stretch;
+                    justify-content: center;
+                    background: #000;
+                    overflow: hidden;
+                }
+                .teams-floating-controls {
+                    position: absolute;
+                    bottom: 32px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: #2b2b2b;
+                    border: 1px solid rgba(255,255,255,0.1);
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                    box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+                    z-index: 1000;
+                }
+                .control-group {
+                    display: flex;
+                    gap: 8px;
+                }
+                .teams-btn-round {
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 4px;
+                    border: none;
+                    background: transparent;
+                    color: #fff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: background 0.2s;
+                }
+                .teams-btn-round:hover {
+                    background: rgba(255,255,255,0.1);
+                }
+                .divider-teams {
+                    width: 1px;
+                    height: 24px;
+                    background: rgba(255,255,255,0.1);
+                }
+                .teams-btn-leave {
+                    background: #c4314b;
+                    color: #fff;
+                    border: none;
+                    padding: 6px 16px;
+                    border-radius: 4px;
+                    font-weight: 700;
+                    font-size: 0.85rem;
+                    cursor: pointer;
+                    transition: background 0.2s;
+                }
+                .teams-btn-leave:hover {
+                    background: #a3293f;
+                }
+                
+                /* Zego UI Overrides to match Teams */
+                :global(.teams-video-frame > div iframe) {
+                    border-radius: 12px !important;
+                }
+                /* Call Notification Styles */
+                .call-signal-msg {
+                    padding: 0.5rem 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    min-width: 210px;
+                }
+                .call-info {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                }
+                .call-icon-pulse {
+                    position: relative;
+                    width: 44px;
+                    height: 44px;
+                    background: #464775;
+                    color: #fff;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                    z-index: 1;
+                }
+                .pulse-ring {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    background: #464775;
+                    opacity: 0.3;
+                    animation: pulse 2s infinite;
+                    z-index: -1;
+                }
+                @keyframes pulse {
+                    0% { transform: scale(1); opacity: 0.4; }
+                    100% { transform: scale(2); opacity: 0; }
+                }
+                .call-text h3 {
+                    margin: 0;
+                    font-size: 0.95rem;
+                    font-weight: 700;
+                    color: inherit;
+                }
+                .call-text p {
+                    margin: 2px 0 0;
+                    font-size: 0.75rem;
+                    opacity: 0.7;
+                }
+                .btn-join-call {
+                    width: 100%;
+                    background: #464775;
+                    color: #fff;
+                    border: none;
+                    padding: 0.6rem;
+                    border-radius: 6px;
+                    font-weight: 700;
+                    font-size: 0.85rem;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    box-shadow: 0 4px 12px rgba(70, 71, 117, 0.2);
+                }
+                .btn-join-call:hover {
+                    background: #3b3c63;
+                    transform: translateY(-1px);
+                    box-shadow: 0 6px 16px rgba(70, 71, 117, 0.3);
+                }
+                .call-ended-msg {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    padding: 0.25rem 0;
+                    opacity: 0.8;
+                }
+                .ended-icon-box {
+                    width: 28px;
+                     height: 28px;
+                     background: #f3f4f6;
+                     color: #6b7280;
+                     border-radius: 50%;
+                     display: flex;
+                     align-items: center;
+                     justify-content: center;
+                 }
+                 .bubble-me .ended-icon-box {
+                     background: rgba(255,255,255,0.1);
+                     color: #fff;
+                 }
+                 .call-ended-msg span {
+                     font-size: 0.85rem;
+                     font-weight: 500;
+                 }
             `}</style>
         </div>
     );

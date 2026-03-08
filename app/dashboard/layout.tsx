@@ -140,7 +140,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
             <main
                 className="main-content"
-                style={(isSettingsPage || pathname === "/dashboard/ai-sandbox" || pathname === "/dashboard/messages") ? { marginLeft: (pathname === "/dashboard/ai-sandbox" || pathname === "/dashboard/messages") ? undefined : 0, padding: 0 } : {}}
+                style={(isSettingsPage || pathname === "/dashboard/ai-sandbox" || pathname === "/dashboard/messages" || pathname === "/dashboard/admin") ? { marginLeft: (pathname === "/dashboard/ai-sandbox" || pathname === "/dashboard/messages" || pathname === "/dashboard/admin") ? undefined : 0, padding: 0 } : {}}
             >
                 {children}
             </main>
