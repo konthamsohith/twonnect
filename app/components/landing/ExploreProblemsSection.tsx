@@ -26,32 +26,60 @@ const exampleProblems = [
 
 export default function ExploreProblemsSection() {
     return (
-        <section className="landing-section" id="explore">
+        <section className="explore-problems-section" id="explore" style={{ padding: '10rem 1rem', background: 'white' }}>
             <div className="container">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-                    <div style={{ textAlign: 'left', maxWidth: '650px' }}>
-                        <h2 className="section-title" style={{ textAlign: 'left', marginBottom: '0.75rem' }}>Explore Validated Problems</h2>
-                        <p className="text-muted text-lg" style={{ lineHeight: 1.6 }}>Real pain points submitted by industry experts, waiting for builders.</p>
+                <div className="section-header" style={{ textAlign: 'left', marginBottom: '4rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '2rem' }}>
+                    <div style={{ maxWidth: '600px' }}>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="section-title"
+                            style={{ textAlign: 'left' }}
+                        >
+                            Explore Validated Problems
+                        </motion.h2>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            className="section-subtitle"
+                            style={{ textAlign: 'left', margin: '0' }}
+                        >
+                            Submit your burning frustrations and watch top engineering talent architect solutions.
+                        </motion.p>
                     </div>
-                    <button className="btn-outline">View All Problems</button>
+                    <motion.button
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="btn-outline"
+                    >
+                        View All Problems
+                    </motion.button>
                 </div>
 
                 <div className="grid-3">
                     {exampleProblems.map((problem, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: i * 0.1 }}
+                            transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] as any }}
                             className="problem-card"
                         >
                             <div className="problem-category">{problem.category}</div>
                             <h3 className="problem-title">{problem.title}</h3>
                             <p className="problem-desc">{problem.desc}</p>
                             <div className="problem-meta">
-                                <span><strong style={{ color: 'var(--primary)', fontWeight: 700 }}>{problem.builders}</strong> Builders Interested</span>
-                                <button className="btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}>Solve This</button>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--muted)', fontWeight: 500 }}>
+                                    <strong style={{ color: 'var(--primary)', fontWeight: 800 }}>{problem.builders}</strong> Builders Interested
+                                </span>
+                                <button className="btn-get-started" style={{ padding: '0.5rem 1rem', fontSize: '0.75rem', borderRadius: 'var(--radius-sm)' }}>Solve This</button>
                             </div>
                         </motion.div>
                     ))}

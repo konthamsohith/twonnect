@@ -8,14 +8,11 @@ import HeroBg from "./components/HeroBg";
 
 // New Landing Page Components
 import HeroSection from "./components/landing/HeroSection";
-import TheProblemSection from "./components/landing/TheProblemSection";
-import HowItWorksSection from "./components/landing/HowItWorksSection";
-import AIValidationSection from "./components/landing/AIValidationSection";
-import ExploreProblemsSection from "./components/landing/ExploreProblemsSection";
-import UserValueSection from "./components/landing/UserValueSection";
-import StatsSection from "./components/landing/StatsSection";
-import FinalCTASection from "./components/landing/FinalCTASection";
 import AboutSection from "./components/landing/AboutSection";
+import FeaturesSection from "./components/landing/FeaturesSection";
+import AISection from "./components/landing/AISection";
+import FAQSection from "./components/landing/FAQSection";
+
 
 export default function Home() {
     const { user, loading } = useAuth();
@@ -74,14 +71,13 @@ export default function Home() {
 
             <div style={{ position: 'relative', zIndex: 10 }}>
                 <HeroSection />
-                <TheProblemSection />
-                <HowItWorksSection />
-                <AIValidationSection />
-                <ExploreProblemsSection />
-                <UserValueSection />
-                <StatsSection />
-                <FinalCTASection />
+                <hr style={{ border: 'none', borderTop: '1px solid #e5e7eb', width: '100%', margin: '0' }} />
                 <AboutSection />
+                <hr style={{ border: 'none', borderTop: '1px solid #e5e7eb', width: '100%', margin: '0' }} />
+                <FeaturesSection />
+                <AISection />
+                <FAQSection />
+
             </div>
         </main>
     );

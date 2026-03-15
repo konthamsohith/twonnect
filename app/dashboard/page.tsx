@@ -65,7 +65,17 @@ export default function DashboardPage() {
                         <h1 style={{ fontSize: "32px", fontWeight: 600, color: "#111827", letterSpacing: "-0.03em", lineHeight: "1" }}>Idea Marketplace</h1>
                         <p style={{ color: "#6b7280", marginTop: "0.4rem", fontSize: "1.05rem" }}>Bridging real-world problems with actionable execution.</p>
                     </div>
-                    <Link href="/dashboard/submit" className="btn-blue" style={{ borderRadius: "12px", padding: "0.8rem 1.6rem", display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 700 }}>
+                    <Link
+                        href="/dashboard/submit"
+                        style={{
+                            display: "flex", alignItems: "center", gap: "0.5rem",
+                            borderRadius: "10px", padding: "0.65rem 1.25rem",
+                            fontWeight: 600, fontSize: "0.9rem",
+                            background: "#111827", color: "white",
+                            border: "1.5px solid #111827",
+                            textDecoration: "none", whiteSpace: "nowrap"
+                        }}
+                    >
                         <IconPlus /> Submit Proposal
                     </Link>
                 </div>
@@ -96,9 +106,11 @@ export default function DashboardPage() {
                 <section className="discovery-pane">
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
                         <h3 style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.03em" }}>Venture Discovery</h3>
-                        <div className="search-box">
-                            <IconSearch />
-                            <input type="text" placeholder="Search Registry..." />
+                        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                            <div className="search-box">
+                                <IconSearch />
+                                <input type="text" placeholder="Search Registry..." />
+                            </div>
                         </div>
                     </div>
 
@@ -175,7 +187,7 @@ export default function DashboardPage() {
                             )}
                             <Link href="/dashboard/submit" style={{ textDecoration: "none" }}>
                                 <button className="btn-ghost-plus">
-                                    <IconPlus /> Find New Project
+                                    <IconPlus /> Submit Proposal
                                 </button>
                             </Link>
                         </div>

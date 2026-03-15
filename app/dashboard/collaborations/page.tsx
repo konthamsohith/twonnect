@@ -95,7 +95,7 @@ export default function CollaborationsPage() {
                 </div>
                 <div className="header-actions">
                     <button className="btn-premium-action" onClick={() => window.location.href = "/dashboard/submit"}>
-                        Start a Collaborative Project
+                        Submit Proposal
                     </button>
                 </div>
             </header>

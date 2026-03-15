@@ -38,16 +38,27 @@ export default function Navbar() {
             {/* Scroll progress bar */}
             <div className="scroll-progress" style={{ width: `${progress * 100}%` }} />
 
-            <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
+            <nav className="navbar-wrapper">
+                {/* Navbar Blueprint Lines */}
+                <div className="blueprint-line-v" style={{ left: 'calc(50% - 575px)', height: '100vh', top: 0, width: '0.5px', opacity: 0.6 }} />
+                <div className="blueprint-line-v" style={{ right: 'calc(50% - 575px)', height: '100vh', top: 0 }} />
+
+                {/* Intersection squares at navbar bottom */}
+                <div className="intersection-dot" style={{ top: '100%', left: 'calc(50% - 575px)', transform: 'translate(-50%, -50%)' }} />
+                <div className="intersection-dot" style={{ top: '100%', left: 'calc(50% + 575px)', transform: 'translate(-50%, -50%)' }} />
+
                 <div className="navbar-container">
                     <Link href={user ? "/dashboard" : "/"} className="navbar-logo">
                         <Logo />
                     </Link>
+
                     <div className="navbar-links">
-                        <Link href="/#about">About</Link>
-                        <Link href="/blog">Blog</Link>
-                        <Link href="/faq">FAQ</Link>
+                        <Link href="/#about" className="nav-link">About</Link>
+                        <Link href="/#features" className="nav-link">Feature</Link>
+                        <Link href="/blog" className="nav-link">Testimonials</Link>
+                        <Link href="/faq" className="nav-link">FAQs</Link>
                     </div>
+
                     <div className="navbar-actions">
                         {!loading ? (
                             user ? (
@@ -59,16 +70,7 @@ export default function Navbar() {
                                             className="nav-avatar"
                                         />
                                     ) : (
-                                        <div className="nav-avatar initials-avatar" style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            background: "var(--primary)",
-                                            color: "white",
-                                            fontSize: "0.8rem",
-                                            fontWeight: "600",
-                                            borderRadius: "50%"
-                                        }}>
+                                        <div className="nav-avatar initials-avatar">
                                             {(user.user_metadata?.full_name || user.email || "U")
                                                 .split(' ')
                                                 .map((n: string) => n[0])
@@ -77,21 +79,20 @@ export default function Navbar() {
                                                 .slice(0, 2)}
                                         </div>
                                     )}
-                                    <button className="btn-ghost" onClick={handleLogout} style={{ fontWeight: 500 }}>Sign Out</button>
+                                    <button className="btn-signout" onClick={handleLogout}>Sign Out</button>
                                 </div>
                             ) : (
-                                <>
+                                <div className="nav-auth-buttons">
                                     <Link href="/signin">
-                                        <button className="btn-ghost" style={{ marginRight: "0.25rem", padding: "0.5rem 1rem", fontWeight: 500 }}>Sign In</button>
+                                        <button className="btn-signin">Sign In</button>
                                     </Link>
-                                    <Link href="/get-started">
-                                        <button className="btn-primary" style={{ padding: "0.5rem 1.25rem" }}>Get Started</button>
+                                    <Link href="/auth">
+                                        <button className="btn-black-pill">Get Started</button>
                                     </Link>
-                                </>
+                                </div>
                             )
                         ) : (
-                            // Fixed width placeholder to prevent layout shift
-                            <div style={{ width: "160px" }} />
+                            <div className="nav-loading-placeholder" />
                         )}
                     </div>
                 </div>

@@ -63,9 +63,9 @@ export const metadata = {
     },
 };
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import NewsletterCTA from "./components/NewsletterCTA";
+import ConditionalNavbar from "./components/ConditionalNavbar";
+import ConditionalFooter from "./components/ConditionalFooter";
+
 import ScrollReveal from "./components/ScrollReveal";
 import { AuthProvider } from "@/context/AuthContext";
 
@@ -79,10 +79,10 @@ export default function RootLayout({
             <body className={GeistSans.className}>
                 <AuthProvider>
                     <ScrollReveal />
-                    <Navbar />
+                    <ConditionalNavbar />
                     {children}
-                    <NewsletterCTA />
-                    <Footer />
+
+                    <ConditionalFooter />
                 </AuthProvider>
             </body>
         </html>

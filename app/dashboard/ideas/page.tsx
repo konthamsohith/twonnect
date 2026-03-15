@@ -83,8 +83,18 @@ export default function MyIdeasPage() {
                         <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: "1" }}>Idea Control Center</h1>
                         <p style={{ opacity: 0.8 }}>Professional management suite for your startup registry.</p>
                     </div>
-                    <Link href="/dashboard/submit" className="btn-blue" style={{ display: "flex", alignItems: "center", gap: "0.5rem", borderRadius: "10px", padding: "0.8rem 1.4rem", fontWeight: 700 }}>
-                        <IconPlus /> Add Proposal
+                    <Link
+                        href="/dashboard/submit"
+                        style={{
+                            display: "flex", alignItems: "center", gap: "0.5rem",
+                            borderRadius: "10px", padding: "0.65rem 1.25rem",
+                            fontWeight: 600, fontSize: "0.9rem",
+                            background: "#111827", color: "white",
+                            border: "1.5px solid #111827",
+                            textDecoration: "none", whiteSpace: "nowrap"
+                        }}
+                    >
+                        <IconPlus /> Submit Proposal
                     </Link>
                 </div>
             </header>
@@ -170,8 +180,18 @@ export default function MyIdeasPage() {
                     <p style={{ color: "#6b7280", marginBottom: "2rem" }}>
                         Your professional startup ideas will be managed here once submitted.
                     </p>
-                    <Link href="/dashboard/submit" className="btn-blue" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.8rem 2rem" }}>
-                        <IconPlus /> New Submission
+                    <Link
+                        href="/dashboard/submit"
+                        style={{
+                            display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                            borderRadius: "10px", padding: "0.65rem 1.25rem",
+                            fontWeight: 600, fontSize: "0.9rem",
+                            background: "#111827", color: "white",
+                            border: "1.5px solid #111827",
+                            textDecoration: "none"
+                        }}
+                    >
+                        <IconPlus /> Submit Proposal
                     </Link>
                 </div>
             )}
