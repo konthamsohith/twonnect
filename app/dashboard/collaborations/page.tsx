@@ -160,7 +160,7 @@ export default function CollaborationsPage() {
                         ) : (
                             <div style={{ padding: "4rem 2rem", textAlign: "center", background: "#f9fafb", borderRadius: "24px", border: "1px dashed #e5e7eb" }}>
                                 <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>🚀</div>
-                                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#111827", marginBottom: "0.5rem" }}>No open collaborations yet</h3>
+                                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#000000", marginBottom: "0.5rem" }}>No open collaborations yet</h3>
                                 <p style={{ color: "#6b7280", maxWidth: "400px", margin: "0 auto", fontSize: "0.95rem" }}>
                                     Be the visionary who starts the next great project. Click "Start a Collaborative Project" to begin.
                                 </p>

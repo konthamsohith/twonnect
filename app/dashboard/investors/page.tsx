@@ -201,7 +201,7 @@ export default function InvestorsPage() {
                     {activeTab === 'marketplace' && !loading && marketDeals.length === 0 && (
                         <div className="empty-deals-state" style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '4rem 2rem', background: '#f9fafb', borderRadius: '16px', border: '1px dashed #d1d5db' }}>
                             <IconShield />
-                            <h3 style={{ marginTop: '1rem', color: '#111827', fontSize: '1.2rem' }}>No Validated Deals Available</h3>
+                            <h3 style={{ marginTop: '1rem', color: '#000000', fontSize: '1.2rem' }}>No Validated Deals Available</h3>
                             <p style={{ color: '#6b7280', maxWidth: '400px', margin: '0.5rem auto 0' }}>There are currently no Collaborative ideas in the Marketplace that meet institutional validation thresholds.</p>
                         </div>
                     )}
@@ -263,7 +263,7 @@ export default function InvestorsPage() {
                     {activeTab === 'portfolio' && portfolioDeals.length === 0 && (
                         <div className="empty-deals-state" style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '4rem 2rem', background: '#f9fafb', borderRadius: '16px', border: '1px dashed #d1d5db' }}>
                             <IconBriefcase />
-                            <h3 style={{ marginTop: '1rem', color: '#111827', fontSize: '1.2rem' }}>No Investments Yet</h3>
+                            <h3 style={{ marginTop: '1rem', color: '#000000', fontSize: '1.2rem' }}>No Investments Yet</h3>
                             <p style={{ color: '#6b7280', maxWidth: '400px', margin: '0.5rem auto 0' }}>Deploy capital into verified ideas from the Marketplace to start building your portfolio here.</p>
                         </div>
                     )}
@@ -508,7 +508,7 @@ export default function InvestorsPage() {
                     max-width: 1300px;
                     margin: 0 auto;
                     padding-bottom: 6rem;
-                    color: #111827;
+                    color: #000000;
                 }
 
                 .portal-header {
@@ -541,7 +541,7 @@ export default function InvestorsPage() {
                     margin: 0 auto;
                     line-height: 1.6;
                 }
-                .auth-text { color: #111827; font-weight: 700; }
+                .auth-text { color: #000000; font-weight: 700; }
 
                 /* Macro Stats Row */
                 .macro-stats-row {
@@ -565,10 +565,10 @@ export default function InvestorsPage() {
                     display: flex; align-items: center; justify-content: center;
                     width: 48px; height: 48px;
                     background: #f9fafb; border: 1px solid #f3f4f6; border-radius: 12px;
-                    color: #111827;
+                    color: #000000;
                 }
                 .stat-data { display: flex; flex-direction: column; }
-                .stat-value { font-size: 20px; font-weight: 600; color: #111827; letter-spacing: -0.03em; }
+                .stat-value { font-size: 20px; font-weight: 600; color: #000000; letter-spacing: -0.03em; }
                 .stat-label { font-size: 0.8rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
 
                 /* Deals Section & Tabs */
@@ -604,10 +604,10 @@ export default function InvestorsPage() {
                 }
                 .tab-btn:hover {
                     background: #f3f4f6;
-                    color: #111827;
+                    color: #000000;
                 }
                 .tab-btn.active {
-                    background: #111827;
+                    background: #000000;
                     color: #ffffff;
                 }
 
@@ -689,9 +689,9 @@ export default function InvestorsPage() {
                     font-feature-settings: "tnum"; 
                     font-variant-numeric: tabular-nums; 
                 }
-                .m-value.score { color: #111827; display: flex; align-items: center; gap: 6px; }
+                .m-value.score { color: #000000; display: flex; align-items: center; gap: 6px; }
                 .m-value.score::after { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
-                .m-value.score-blue { color: #111827; }
+                .m-value.score-blue { color: #000000; }
 
                 .momentum-highlight {
                     display: inline-flex; align-items: center; gap: 0.5rem;
@@ -701,21 +701,21 @@ export default function InvestorsPage() {
                 }
 
                 .portfolio-update {
-                    background: #f9fafb; border-left: 2px solid #111827;
+                    background: #f9fafb; border-left: 2px solid #000000;
                     padding: 10px 14px; border-radius: 0 4px 4px 0; margin-bottom: 1.5rem;
                     display: flex; flex-direction: column; gap: 4px;
                 }
                 .update-label { font-size: 0.65rem; font-weight: 700; color: #6b7280; text-transform: uppercase; }
-                .update-text { font-size: 0.85rem; font-weight: 500; color: #111827; line-height: 1.4; }
+                .update-text { font-size: 0.85rem; font-weight: 500; color: #000000; line-height: 1.4; }
 
                 /* Funding Progress */
                 .funding-progress { margin-bottom: 1.5rem; }
                 .progress-labels { display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.8rem; font-weight: 600; }
-                .raised-amt { color: #111827; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+                .raised-amt { color: #000000; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
                 .target-amt { color: #6b7280; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
                 
                 .progress-track { width: 100%; height: 4px; background: #e5e7eb; border-radius: 2px; overflow: hidden; }
-                .progress-fill { height: 100%; background: #111827; border-radius: 2px; transition: width 1s ease-out; }
+                .progress-fill { height: 100%; background: #000000; border-radius: 2px; transition: width 1s ease-out; }
 
                 /* Investment Details (Portfolio) */
                 .investment-details {
@@ -724,7 +724,7 @@ export default function InvestorsPage() {
                 }
                 .detail-row { display: flex; justify-content: space-between; font-size: 0.8rem; }
                 .d-label { color: #6b7280; font-weight: 500; }
-                .d-value { color: #111827; font-weight: 600; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+                .d-value { color: #000000; font-weight: 600; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
 
                 /* Actions */
                 .deal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: auto; }
@@ -750,19 +750,19 @@ export default function InvestorsPage() {
                 .btn-exit-confirm:hover { background: #c2410c; border-color: #c2410c; }
 
                 .btn-no-interest-confirm {
-                    padding: 0.875rem; background: #111827; color: white; border: 1px solid #111827; border-radius: 8px;
+                    padding: 0.875rem; background: #000000; color: white; border: 1px solid #000000; border-radius: 8px;
                     font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center;
                 }
                 .btn-no-interest-confirm:hover { background: #374151; border-color: #374151; }
                 
                 .btn-invest {
-                    padding: 0.75rem; background: #111827; color: white; border: 1px solid #111827; border-radius: 8px;
+                    padding: 0.75rem; background: #000000; color: white; border: 1px solid #000000; border-radius: 8px;
                     font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center;
                 }
                 .btn-invest:hover { background: #374151; border-color: #374151; }
                 
                 .btn-review {
-                    padding: 0.75rem; background: white; color: #111827; border: 1px solid #e5e7eb; border-radius: 8px;
+                    padding: 0.75rem; background: white; color: #000000; border: 1px solid #e5e7eb; border-radius: 8px;
                     font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center;
                 }
                 .btn-review:hover { background: #f9fafb; border-color: #d1d5db; }
@@ -787,7 +787,7 @@ export default function InvestorsPage() {
                     width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
                     border-radius: 8px; color: #6b7280; cursor: pointer; transition: all 0.2s;
                 }
-                .modal-close:hover { color: #111827; background: #f3f4f6; border-color: #d1d5db; }
+                .modal-close:hover { color: #000000; background: #f3f4f6; border-color: #d1d5db; }
 
                 .modal-header { 
                     margin-bottom: 2rem; 
@@ -823,21 +823,21 @@ export default function InvestorsPage() {
                 
                 .modal-body { margin-bottom: 2rem; }
                 .modal-section { margin-bottom: 2rem; }
-                .modal-section h3 { font-size: 0.9rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.02em; }
+                .modal-section h3 { font-size: 0.9rem; font-weight: 700; color: #000000; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.02em; }
                 .modal-section p { font-size: 0.95rem; color: #4b5563; line-height: 1.6; }
                 
                 .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
                 .m-box { background: #f9fafb; padding: 1.25rem; border-radius: 8px; border: 1px solid #e5e7eb; display: flex; flex-direction: column; gap: 0.5rem; }
                 .m-box .label { font-size: 0.65rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.02em; }
-                .m-box .value { font-size: 1.15rem; font-weight: 700; color: #111827; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
-                .m-box .value.score { color: #111827; display: flex; align-items: center; gap: 6px; }
+                .m-box .value { font-size: 1.15rem; font-weight: 700; color: #000000; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+                .m-box .value.score { color: #000000; display: flex; align-items: center; gap: 6px; }
                 .m-box .value.score::after { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
                 
                 .input-label { display: block; font-size: 0.8rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem; }
                 .currency-input-wrapper { display: flex; align-items: center; border: 1px solid #d1d5db; border-radius: 8px; padding: 1rem 1.25rem; transition: border-color 0.2s, box-shadow 0.2s; background: #ffffff; }
-                .currency-input-wrapper:focus-within { border-color: #111827; box-shadow: 0 0 0 1px #111827; }
+                .currency-input-wrapper:focus-within { border-color: #000000; box-shadow: 0 0 0 1px #000000; }
                 .currency-symbol { font-size: 1.5rem; font-weight: 600; color: #9ca3af; margin-right: 0.5rem; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
-                .currency-input { border: none; outline: none; font-size: 1.75rem; font-weight: 700; color: #111827; width: 100%; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; letter-spacing: -0.02em; }
+                .currency-input { border: none; outline: none; font-size: 1.75rem; font-weight: 700; color: #000000; width: 100%; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; letter-spacing: -0.02em; }
                 
                 .wire-notice { display: flex; align-items: flex-start; gap: 0.75rem; background: #f9fafb; border: 1px solid #e5e7eb; padding: 1rem; border-radius: 8px; font-size: 0.8rem; color: #4b5563; margin-top: 1.5rem; line-height: 1.5; }
                 .wire-notice svg { color: #6b7280; flex-shrink: 0; margin-top: 2px; }
@@ -848,14 +848,14 @@ export default function InvestorsPage() {
                 .ct-row { display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 14px 16px; border-bottom: 1px solid #f3f4f6; align-items: center; color: #4b5563; }
                 .ct-row:last-child { border-bottom: none; }
                 .ct-row.highlight-row { background: #eff6ff; color: #1e3a8a; font-weight: 500; }
-                .shareholder { display: flex; align-items: center; gap: 8px; font-weight: 500; color: #111827; }
+                .shareholder { display: flex; align-items: center; gap: 8px; font-weight: 500; color: #000000; }
                 .ct-row.highlight-row .shareholder { color: #1e3a8a; }
-                .ownership { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; text-align: right; font-weight: 600; color: #111827; }
+                .ownership { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; text-align: right; font-weight: 600; color: #000000; }
                 .ct-row.highlight-row .ownership { color: #1e3a8a; font-weight: 700; }
 
                 .modal-actions.dual { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
                 .btn-invest-large {
-                    padding: 0.875rem; background: #111827; color: white; border: 1px solid #111827; border-radius: 8px;
+                    padding: 0.875rem; background: #000000; color: white; border: 1px solid #000000; border-radius: 8px;
                     font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center;
                 }
                 .btn-invest-large:hover { background: #374151; border-color: #374151; }

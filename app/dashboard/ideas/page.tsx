@@ -89,8 +89,8 @@ export default function MyIdeasPage() {
                             display: "flex", alignItems: "center", gap: "0.5rem",
                             borderRadius: "10px", padding: "0.65rem 1.25rem",
                             fontWeight: 600, fontSize: "0.9rem",
-                            background: "#111827", color: "white",
-                            border: "1.5px solid #111827",
+                            background: "#000000", color: "white",
+                            border: "1.5px solid #000000",
                             textDecoration: "none", whiteSpace: "nowrap"
                         }}
                     >
@@ -103,7 +103,7 @@ export default function MyIdeasPage() {
             <div className="stats-summary" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.25rem", marginBottom: "2rem" }}>
                 <div className="stat-plate" style={{ background: "white", padding: "1.25rem", borderRadius: "16px", border: "1px solid #e5e7eb" }}>
                     <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", marginBottom: "0.25rem" }}>Total Proposals</div>
-                    <div style={{ fontSize: "20px", fontWeight: 600, color: "#111827", letterSpacing: "-0.03em" }}>{loading ? "..." : totalIdeas}</div>
+                    <div style={{ fontSize: "20px", fontWeight: 600, color: "#000000", letterSpacing: "-0.03em" }}>{loading ? "..." : totalIdeas}</div>
                 </div>
                 <div className="stat-plate" style={{ background: "white", padding: "1.25rem", borderRadius: "16px", border: "1px solid #e5e7eb" }}>
                     <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", marginBottom: "0.25rem" }}>Collaborative</div>
@@ -186,8 +186,8 @@ export default function MyIdeasPage() {
                             display: "inline-flex", alignItems: "center", gap: "0.5rem",
                             borderRadius: "10px", padding: "0.65rem 1.25rem",
                             fontWeight: 600, fontSize: "0.9rem",
-                            background: "#111827", color: "white",
-                            border: "1.5px solid #111827",
+                            background: "#000000", color: "white",
+                            border: "1.5px solid #000000",
                             textDecoration: "none"
                         }}
                     >

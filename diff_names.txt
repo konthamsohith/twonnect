@@ -1,0 +1,10 @@
+﻿app/dashboard/admin/page.tsx
+app/dashboard/ai-sandbox/page.tsx
+app/dashboard/collaborations/collaborations.css
+app/dashboard/collaborations/page.tsx
+app/dashboard/ideas/page.tsx
+app/dashboard/investors/page.tsx
+app/dashboard/messages/page.tsx
+app/dashboard/page.tsx
+app/dashboard/settings/page.tsx
+app/dashboard/submit/page.tsx

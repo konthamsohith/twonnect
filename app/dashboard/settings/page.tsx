@@ -37,7 +37,7 @@ const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
 ];
 
 const ACCOUNTS: AccCfg[] = [
-    { key: 'github', label: 'GitHub', ph: 'username', icon: <I.GitHub />, accent: '#111827', bg: '#f3f4f6', url: u => `https://github.com/${u}` },
+    { key: 'github', label: 'GitHub', ph: 'username', icon: <I.GitHub />, accent: '#000000', bg: '#f3f4f6', url: u => `https://github.com/${u}` },
     { key: 'leetcode', label: 'LeetCode', ph: 'username', icon: <I.LC />, accent: '#d97706', bg: '#fffbeb', url: u => `https://leetcode.com/u/${u}` },
     { key: 'codechef', label: 'CodeChef', ph: 'username', icon: <I.CC />, accent: '#92400e', bg: '#fefce8', url: u => `https://codechef.com/users/${u}` },
 ];
@@ -421,16 +421,16 @@ export default function SettingsPage() {
                     text-decoration: none; border-radius: 10px;
                     transition: all 0.2s;
                 }
-                .s-back-link:hover { background: #f1f5f9; color: #111827; }
+                .s-back-link:hover { background: #f1f5f9; color: #000000; }
 
                 .s-avatar-wrap { display: flex; align-items: center; gap: 0.875rem; padding: 1.25rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 0.5rem; }
-                .s-avatar { width: 42px; height: 42px; border-radius: 10px; background: #111827; color: #ffffff; font-size: 1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; letter-spacing: -0.02em; }
-                .s-avatar-name { font-size: 0.875rem; font-weight: 700; color: #111827; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+                .s-avatar { width: 42px; height: 42px; border-radius: 10px; background: #000000; color: #ffffff; font-size: 1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; letter-spacing: -0.02em; }
+                .s-avatar-name { font-size: 0.875rem; font-weight: 700; color: #000000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
                 .s-avatar-email { font-size: 0.72rem; color: #9ca3af; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
                 .s-nav { display: flex; flex-direction: column; gap: 2px; background: transparent; padding: 0; }
                 .s-nav-item { display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.75rem 1rem; background: transparent; border: none; border-radius: 10px; font-size: 0.875rem; font-weight: 500; color: #4b5563; cursor: pointer; text-align: left; transition: all 0.12s; font-family: inherit; }
-                .s-nav-item:hover { background: #f3f4f6; color: #111827; }
-                .s-nav-item.active { background: #111827; color: #ffffff; font-weight: 600; }
+                .s-nav-item:hover { background: #f3f4f6; color: #000000; }
+                .s-nav-item.active { background: #000000; color: #ffffff; font-weight: 600; }
                 .s-nav-divider { border-top: 1px solid #f1f5f9; margin: 0.75rem 0; }
                 .s-nav-danger { color: #b91c1c; }
                 .s-nav-danger:hover { background: #fef2f2; color: #b91c1c; }
@@ -459,24 +459,24 @@ export default function SettingsPage() {
                 .s-hint { font-size: 0.72rem; color: #94a3b8; margin-top: 0.3rem; }
                 .s-input {
                     width: 100%; padding: 0.7rem 0.875rem; border: 1px solid #d1d5db; border-radius: 8px;
-                    font-size: 0.875rem; color: #111827; font-family: inherit; background: #fff;
+                    font-size: 0.875rem; color: #000000; font-family: inherit; background: #fff;
                     outline: none; transition: border-color 0.15s, box-shadow 0.15s; box-sizing: border-box;
                 }
-                .s-input:focus { border-color: #111827; box-shadow: 0 0 0 2px rgba(17,24,39,0.08); }
+                .s-input:focus { border-color: #000000; box-shadow: 0 0 0 2px rgba(17,24,39,0.08); }
                 .s-input.sm { width: 160px; }
                 .s-textarea {
                     width: 100%; padding: 0.7rem 0.875rem; border: 1px solid #d1d5db; border-radius: 8px;
-                    font-size: 0.875rem; color: #111827; font-family: inherit; background: #fff;
+                    font-size: 0.875rem; color: #000000; font-family: inherit; background: #fff;
                     outline: none; transition: border-color 0.15s, box-shadow 0.15s;
                     resize: vertical; line-height: 1.6; box-sizing: border-box;
                 }
-                .s-textarea:focus { border-color: #111827; box-shadow: 0 0 0 2px rgba(17,24,39,0.08); }
+                .s-textarea:focus { border-color: #000000; box-shadow: 0 0 0 2px rgba(17,24,39,0.08); }
                 .s-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
                 .s-char-count { font-size: 0.72rem; color: #94a3b8; text-align: right; }
 
                 /* ── Skills ── */
                 .s-skill-input-row { display: flex; gap: 0.625rem; }
-                .s-add-btn { display: flex; align-items: center; gap: 4px; padding: 0.7rem 1rem; background: #111827; color: #fff; border: none; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: inherit; transition: background 0.15s; }
+                .s-add-btn { display: flex; align-items: center; gap: 4px; padding: 0.7rem 1rem; background: #000000; color: #fff; border: none; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: inherit; transition: background 0.15s; }
                 .s-add-btn:hover:not(:disabled) { background: #374151; }
                 .s-add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
                 .s-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
@@ -487,7 +487,7 @@ export default function SettingsPage() {
 
                 /* ── Save Row ── */
                 .s-save-row { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; padding-top: 0.75rem; border-top: 1px solid #f3f4f6; }
-                .s-save-btn { padding: 0.7rem 1.75rem; background: #111827; color: #fff; border: none; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.15s; display: flex; align-items: center; gap: 6px; }
+                .s-save-btn { padding: 0.7rem 1.75rem; background: #000000; color: #fff; border: none; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.15s; display: flex; align-items: center; gap: 6px; }
                 .s-save-btn:hover:not(:disabled) { background: #374151; }
                 .s-save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
                 .s-saved-msg { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; color: #059669; font-weight: 600; }
@@ -499,7 +499,7 @@ export default function SettingsPage() {
 
                 /* ── Buttons ── */
                 .s-btn { padding: 5px 14px; border-radius: 7px; font-size: 0.78rem; font-weight: 600; cursor: pointer; border: 1px solid; font-family: inherit; transition: background 0.12s; white-space: nowrap; }
-                .s-btn.dark { background: #111827; color: #fff; border-color: #111827; }
+                .s-btn.dark { background: #000000; color: #fff; border-color: #000000; }
                 .s-btn.dark:hover:not(:disabled) { background: #374151; }
                 .s-btn.dark:disabled { opacity: 0.4; cursor: not-allowed; }
                 .s-btn.ghost { background: #fff; color: #374151; border-color: #d1d5db; }
@@ -513,7 +513,7 @@ export default function SettingsPage() {
                 .acc-row:first-child { padding-top: 0; }
                 .acc-left { display: flex; align-items: center; gap: 0.875rem; }
                 .acc-logo { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-                .acc-name { font-size: 0.875rem; font-weight: 600; color: #111827; }
+                .acc-name { font-size: 0.875rem; font-weight: 600; color: #000000; }
                 .acc-link { font-size: 0.775rem; color: #2563eb; display: flex; align-items: center; gap: 4px; text-decoration: none; margin-top: 1px; }
                 .acc-link:hover { text-decoration: underline; }
                 .acc-none { font-size: 0.775rem; color: #9ca3af; display: block; margin-top: 1px; }
@@ -525,7 +525,7 @@ export default function SettingsPage() {
                 .proj-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
                 .proj-main { flex: 1; min-width: 0; }
                 .proj-top { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 4px; }
-                .proj-name { font-size: 0.9rem; font-weight: 700; color: #111827; }
+                .proj-name { font-size: 0.9rem; font-weight: 700; color: #000000; }
                 .proj-tech { font-size: 0.72rem; color: #7c3aed; background: #ede9fe; border: 1px solid #ddd6fe; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
                 .proj-desc { font-size: 0.8rem; color: #6b7280; margin: 0 0 4px; }
                 .proj-link { font-size: 0.78rem; color: #2563eb; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; }
@@ -536,7 +536,7 @@ export default function SettingsPage() {
                 /* ── Security ── */
                 .sec-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
                 .sec-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #475569; }
-                .sec-value { font-size: 0.9rem; font-weight: 600; color: #111827; margin-top: 3px; }
+                .sec-value { font-size: 0.9rem; font-weight: 600; color: #000000; margin-top: 3px; }
                 .sec-note { font-size: 0.78rem; color: #94a3b8; margin-top: 2px; }
 
                 /* ── Empty State ── */

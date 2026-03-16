@@ -428,17 +428,17 @@ function MessagesContent() {
                 .chat-list { flex: 1; overflow-y: auto; }
                 .chat-item-wrapper { display: flex; align-items: center; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid #f3f4f6; }
                 .chat-item-wrapper:hover { background: #f3f4f6; }
-                .chat-item-wrapper.active { background: #f0f9ff; border-left: 3px solid #111827; }
+                .chat-item-wrapper.active { background: #f0f9ff; border-left: 3px solid #000000; }
                 .chat-item { flex: 1; display: flex; gap: 0.75rem; padding: 1rem; min-width: 0; }
                 .avatar { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
                 .avatar img { width: 100%; height: 100%; object-fit: cover; }
                 .avatar.sm { width: 32px; height: 32px; border-radius: 8px; }
                 .chat-info { flex: 1; min-width: 0; }
                 .chat-meta { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
-                .chat-name { font-size: 0.875rem; font-weight: 600; color: #111827; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+                .chat-name { font-size: 0.875rem; font-weight: 600; color: #000000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
                 .chat-time { font-size: 0.7rem; color: #9ca3af; }
                 .chat-preview { font-size: 0.8rem; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; }
-                .unread-badge { background: #111827; color: #fff; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; }
+                .unread-badge { background: #000000; color: #fff; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; }
                 .btn-delete-msg { padding: 0.5rem; color: #9ca3af; border: none; background: transparent; cursor: pointer; opacity: 0; transition: opacity 0.2s; }
                 .chat-item-wrapper:hover .btn-delete-msg { opacity: 1; }
                 .msg-main { flex: 1; display: flex; flex-direction: column; background: #fff; min-width: 0; }
@@ -448,7 +448,7 @@ function MessagesContent() {
                 .ch-role { font-size: 0.75rem; color: #6b7280; }
                 .chat-header-right { display: flex; align-items: center; gap: 0.5rem; }
                 .btn-call { width: 36px; height: 36px; border-radius: 8px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #4b5563; background: transparent; }
-                .btn-call.active { background: #111827; color: #fff; }
+                .btn-call.active { background: #000000; color: #fff; }
                 .chat-tag-pill { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
                 .tag-group { background: #fef9c3; color: #854d0e; }
                 .tag-ai { background: #ede9fe; color: #7c3aed; }
@@ -457,11 +457,11 @@ function MessagesContent() {
                 .msg-me { align-self: flex-end; flex-direction: row-reverse; }
                 .bubble { padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; }
                 .bubble-them { background: #fff; border: 1px solid #e5e7eb; }
-                .bubble-me { background: #111827; color: #fff; }
+                .bubble-me { background: #000000; color: #fff; }
                 .msg-time { font-size: 0.65rem; color: #9ca3af; margin-top: 4px; display: block; }
                 .compose-bar { padding: 1rem 1.5rem; border-top: 1px solid #e5e7eb; display: flex; gap: 0.75rem; }
                 .compose-input { flex: 1; border: 1px solid #d1d5db; border-radius: 8px; padding: 0.6rem 1rem; outline: none; }
-                .btn-send { background: #111827; color: #fff; border: none; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
+                .btn-send { background: #000000; color: #fff; border: none; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
                 .empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #9ca3af; }
                 .participants-sidebar { width: 260px; border-left: 1px solid #e5e7eb; background: #fafafa; }
                 .participant-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; }

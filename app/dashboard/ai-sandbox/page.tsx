@@ -266,7 +266,7 @@ export default function AISandboxPage() {
                 <header className="chat-header">
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", width: "100%" }}>
                         <div>
-                            <h1 style={{ fontSize: "28px", fontWeight: 600, color: "#111827", letterSpacing: "-0.03em", lineHeight: "1" }}>AI Sandbox</h1>
+                            <h1 style={{ fontSize: "28px", fontWeight: 600, color: "#000000", letterSpacing: "-0.03em", lineHeight: "1" }}>AI Sandbox</h1>
                             <p style={{ color: "#6b7280", marginTop: "0.5rem", fontSize: "1rem" }}>
                                 Powered by <span style={{ color: "var(--blue)", fontWeight: 700 }}>TWONNECT</span> • Deep Market Scouring Active.
                             </p>
@@ -370,14 +370,14 @@ export default function AISandboxPage() {
                     background: white;
                     border: 1px solid #e5e7eb;
                     border-radius: 12px;
-                    color: #111827;
+                    color: #000000;
                     font-weight: 700;
                     cursor: pointer;
                     transition: all 0.2s;
                     box-shadow: 0 1px 2px rgba(0,0,0,0.02);
                 }
                 .btn-new-chat:hover {
-                    border-color: #111827;
+                    border-color: #000000;
                 }
                 .history-list {
                     margin-top: 2rem;
@@ -426,7 +426,7 @@ export default function AISandboxPage() {
                     min-width: 0;
                 }
                 .history-item-wrapper.active .history-item {
-                    color: #111827;
+                    color: #000000;
                     font-weight: 700;
                 }
 
@@ -492,8 +492,8 @@ export default function AISandboxPage() {
                 @keyframes telemetry { 0% { opacity: 0.3; transform: scale(0.9); } 50% { opacity: 0.8; transform: scale(1.1); } 100% { opacity: 0.3; transform: scale(0.9); } }
                 .ai-status { display: flex; align-items: center; gap: 0.75rem; color: var(--lime); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
                 .hero-actions { display: flex; gap: 1rem; }
-                .btn-v3-ghost { background: transparent; color: #111827; padding: 0.8rem 2rem; border-radius: 12px; font-weight: 800; border: 1px solid #e5e7eb; cursor: pointer; transition: all 0.2s; }
-                .btn-v3-ghost:hover { background: #f9fafb; border-color: #111827; }
+                .btn-v3-ghost { background: transparent; color: #000000; padding: 0.8rem 2rem; border-radius: 12px; font-weight: 800; border: 1px solid #e5e7eb; cursor: pointer; transition: all 0.2s; }
+                .btn-v3-ghost:hover { background: #f9fafb; border-color: #000000; }
 
                 /* Chat Thread */
                 .chat-thread {
@@ -542,13 +542,13 @@ export default function AISandboxPage() {
                 }
                 .chat-bubble.user {
                     background: #f3f4f6;
-                    color: #111827;
+                    color: #000000;
                     border-top-right-radius: 4px;
                 }
                 .chat-bubble.assistant {
                     background: white;
                     border: 1px solid #e5e7eb;
-                    color: #111827;
+                    color: #000000;
                     border-top-left-radius: 4px;
                     box-shadow: 0 1px 2px rgba(0,0,0,0.02);
                 }
@@ -560,13 +560,13 @@ export default function AISandboxPage() {
                 
                 /* Markdown Styling overriding inside chat bubble */
                 :global(.chat-bubble.assistant h1), :global(.chat-bubble.assistant h2), :global(.chat-bubble.assistant h3) {
-                    margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 700; color: #111827;
+                    margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 700; color: #000000;
                 }
                 :global(.chat-bubble.assistant h3) { font-size: 1.1rem; }
                 :global(.chat-bubble.assistant p) { margin-bottom: 0.75rem; }
                 :global(.chat-bubble.assistant ul), :global(.chat-bubble.assistant ol) { margin-left: 1.5rem; margin-bottom: 1rem; }
                 :global(.chat-bubble.assistant li) { margin-bottom: 0.25rem; }
-                :global(.chat-bubble.assistant strong) { font-weight: 700; color: #111827; }
+                :global(.chat-bubble.assistant strong) { font-weight: 700; color: #000000; }
 
                 /* Typing Indicator */
                 .typing-indicator {
@@ -604,7 +604,7 @@ export default function AISandboxPage() {
                     font-family: inherit;
                 }
                 .btn-send {
-                    background: #111827; color: white; width: 40px; height: 40px; border-radius: 10px;
+                    background: #000000; color: white; width: 40px; height: 40px; border-radius: 10px;
                     display: flex; align-items: center; justify-content: center; border: none;
                     cursor: pointer; transition: all 0.2s; flex-shrink: 0; margin-bottom: 4px; margin-right: 4px;
                 }

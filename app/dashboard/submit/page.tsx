@@ -120,7 +120,7 @@ export default function SubmitIdeaPage() {
                             </div>
 
                             <div className="input-field" style={{ marginBottom: "1.5rem" }}>
-                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "0.5rem" }}>Core Problem Title</label>
+                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#000000", marginBottom: "0.5rem" }}>Core Problem Title</label>
                                 <input
                                     type="text"
                                     placeholder="e.g. Inefficient Waste Management in Urban Areas"
@@ -133,7 +133,7 @@ export default function SubmitIdeaPage() {
                             </div>
 
                             <div className="input-field">
-                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "0.5rem" }}>Problem Deep-Dive</label>
+                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#000000", marginBottom: "0.5rem" }}>Problem Deep-Dive</label>
                                 <textarea
                                     placeholder="Provide details about the challenge, who it affects, and why it needs solving..."
                                     value={description}
@@ -206,7 +206,7 @@ export default function SubmitIdeaPage() {
                                     animation: "slideDown 0.3s ease-out"
                                 }}>
                                     <div className="input-field">
-                                        <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "0.5rem" }}>Project Valuation ($)</label>
+                                        <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#000000", marginBottom: "0.5rem" }}>Project Valuation ($)</label>
                                         <input
                                             type="text"
                                             placeholder="e.g. 5,000,000"
@@ -217,7 +217,7 @@ export default function SubmitIdeaPage() {
                                         />
                                     </div>
                                     <div className="input-field">
-                                        <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "0.5rem" }}>Funding Required ($)</label>
+                                        <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#000000", marginBottom: "0.5rem" }}>Funding Required ($)</label>
                                         <input
                                             type="text"
                                             placeholder="e.g. 500,000"
@@ -228,7 +228,7 @@ export default function SubmitIdeaPage() {
                                         />
                                     </div>
                                     <div className="input-field" style={{ gridColumn: "span 2" }}>
-                                        <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "0.5rem" }}>Equity Offered (%)</label>
+                                        <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#000000", marginBottom: "0.5rem" }}>Equity Offered (%)</label>
                                         <input
                                             type="text"
                                             placeholder="e.g. 10%"
@@ -249,7 +249,7 @@ export default function SubmitIdeaPage() {
                             </div>
 
                             <div className="input-field" style={{ marginBottom: "1.5rem" }}>
-                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "0.5rem" }}>Targeted Impact Score (Estimated)</label>
+                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#000000", marginBottom: "0.5rem" }}>Targeted Impact Score (Estimated)</label>
                                 <input
                                     type="text"
                                     placeholder="e.g. 85 / 100"
@@ -314,7 +314,7 @@ export default function SubmitIdeaPage() {
                         flexDirection: "column"
                     }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
-                            <div style={{ background: "#111827", color: "white", padding: "8px", borderRadius: "10px" }}><IconSparkles /></div>
+                            <div style={{ background: "#000000", color: "white", padding: "8px", borderRadius: "10px" }}><IconSparkles /></div>
                             <div>
                                 <h3 style={{ margin: 0, fontSize: "1rem", fontWeight: 800 }}>TWONNECT Companion</h3>
                                 <span style={{ fontSize: "0.7rem", color: "#6b7280", fontWeight: 600 }}>READY TO REFINE</span>
@@ -340,7 +340,7 @@ export default function SubmitIdeaPage() {
                         <button type="button" className="refine-btn" style={{
                             width: "100%",
                             padding: "1rem",
-                            background: "#111827",
+                            background: "#000000",
                             color: "white",
                             border: "none",
                             borderRadius: "14px",

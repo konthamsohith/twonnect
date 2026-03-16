@@ -62,7 +62,7 @@ export default function DashboardPage() {
             <header className="dashboard-header" style={{ marginBottom: "2.5rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
                     <div>
-                        <h1 style={{ fontSize: "32px", fontWeight: 600, color: "#111827", letterSpacing: "-0.03em", lineHeight: "1" }}>Idea Marketplace</h1>
+                        <h1 style={{ fontSize: "32px", fontWeight: 600, color: "#000000", letterSpacing: "-0.03em", lineHeight: "1" }}>Idea Marketplace</h1>
                         <p style={{ color: "#6b7280", marginTop: "0.4rem", fontSize: "1.05rem" }}>Bridging real-world problems with actionable execution.</p>
                     </div>
                     <Link
@@ -71,8 +71,8 @@ export default function DashboardPage() {
                             display: "flex", alignItems: "center", gap: "0.5rem",
                             borderRadius: "10px", padding: "0.65rem 1.25rem",
                             fontWeight: 600, fontSize: "0.9rem",
-                            background: "#111827", color: "white",
-                            border: "1.5px solid #111827",
+                            background: "#000000", color: "white",
+                            border: "1.5px solid #000000",
                             textDecoration: "none", whiteSpace: "nowrap"
                         }}
                     >
@@ -96,7 +96,7 @@ export default function DashboardPage() {
                     <div className="stat-value">Verified</div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-label"><span style={{ color: "#111827", fontWeight: 800 }}>ELITE</span> SCALE TRAJECTORY</div>
+                    <div className="stat-label"><span style={{ color: "#000000", fontWeight: 800 }}>ELITE</span> SCALE TRAJECTORY</div>
                     <div className="stat-value">Locked</div>
                 </div>
             </div>
@@ -134,8 +134,14 @@ export default function DashboardPage() {
                                 </div>
                             ))
                         ) : (
-                            <div className="empty-state">
-                                <p>No collaborative ventures available in the registry.</p>
+                            <div className="empty-state" style={{ padding: "5rem 2rem", background: "linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)", border: "1px dashed #e2e8f0", borderRadius: "24px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", boxShadow: "inset 0 0 20px rgba(0,0,0,0.01)" }}>
+                                <div style={{ width: "56px", height: "56px", borderRadius: "16px", background: "#f8fafc", border: "1px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.25rem", boxShadow: "0 4px 10px rgba(0,0,0,0.02)" }}>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748B" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                                </div>
+                                <h4 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#0F172A", marginBottom: "0.4rem", letterSpacing: "-0.02em" }}>No Active Ventures Found</h4>
+                                <p style={{ color: "#64748B", maxWidth: "360px", fontSize: "0.875rem", lineHeight: "1.6", margin: 0 }}>
+                                    The collaborative registry is currently quiet. Expand your search filters or start a venture yourself to list it for others!
+                                </p>
                             </div>
                         )}
                     </div>
@@ -218,7 +224,7 @@ export default function DashboardPage() {
                 .stat-value {
                     font-size: 20px;
                     font-weight: 600;
-                    color: #111827;
+                    color: #000000;
                     letter-spacing: -0.03em;
                 }
                 
@@ -278,7 +284,7 @@ export default function DashboardPage() {
                     font-size: 1.1rem;
                     font-weight: 500;
                     margin: 0;
-                    color: #111827;
+                    color: #000000;
                 }
                 .row-main p {
                     font-size: 0.9rem;
@@ -298,12 +304,12 @@ export default function DashboardPage() {
                     white-space: nowrap;
                     margin-left: 2rem;
                     transition: all 0.2s;
-                    color: #111827;
+                    color: #000000;
                 }
                 :global(.btn-workspace:hover) {
-                    background: #111827;
+                    background: #000000;
                     color: white;
-                    border-color: #111827;
+                    border-color: #000000;
                 }
 
                 .sidebar-card {
@@ -336,7 +342,7 @@ export default function DashboardPage() {
                 .btn-launch {
                     width: 100%;
                     padding: 0.9rem;
-                    background: #111827;
+                    background: #000000;
                     color: white;
                     border: none;
                     border-radius: 10px;

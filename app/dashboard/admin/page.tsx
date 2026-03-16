@@ -270,7 +270,7 @@ export default function AdminRequestsPage() {
                     font-size: 32px;
                     font-weight: 600;
                     letter-spacing: -0.04em;
-                    color: #111827;
+                    color: #000000;
                     margin: 1rem 0 0.5rem;
                 }
 
@@ -285,7 +285,7 @@ export default function AdminRequestsPage() {
                     font-family: var(--font-geist-mono);
                     font-size: 0.65rem;
                     font-weight: 800;
-                    color: #111827;
+                    color: #000000;
                     background: #bbf451;
                     padding: 4px 10px;
                     border-radius: 4px;
@@ -347,13 +347,13 @@ export default function AdminRequestsPage() {
 
                 .ledger-btn:hover {
                     background: #f8fafc;
-                    color: #111827;
+                    color: #000000;
                 }
 
                 .ledger-btn.active {
-                    background: #111827;
+                    background: #000000;
                     color: white;
-                    border-color: #111827;
+                    border-color: #000000;
                 }
 
                 .ledger-nav-flat {
@@ -378,12 +378,12 @@ export default function AdminRequestsPage() {
                 }
 
                 .flat-btn:hover {
-                    color: #111827;
+                    color: #000000;
                     background: #f1f5f9;
                 }
 
                 .flat-btn.active {
-                    color: #111827;
+                    color: #000000;
                     background: #e2e8f0;
                 }
 
@@ -413,7 +413,7 @@ export default function AdminRequestsPage() {
                     font-family: var(--font-geist-sans);
                     font-size: 1.5rem;
                     font-weight: 600;
-                    color: #111827;
+                    color: #000000;
                     margin: 0;
                     letter-spacing: -0.02em;
                 }
@@ -470,7 +470,7 @@ export default function AdminRequestsPage() {
                     font-family: var(--font-geist-sans);
                     font-size: 1rem;
                     font-weight: 600;
-                    color: #111827;
+                    color: #000000;
                     margin: 0;
                 }
 
@@ -546,7 +546,7 @@ export default function AdminRequestsPage() {
                     padding: 8rem 2rem;
                     color: #94a3b8;
                 }
-                .ledger-empty h3 { color: #111827; margin: 1.5rem 0 0.5rem; }
+                .ledger-empty h3 { color: #000000; margin: 1.5rem 0 0.5rem; }
                 
                 .ledger-loading {
                     display: flex;
@@ -560,7 +560,7 @@ export default function AdminRequestsPage() {
                     width: 32px;
                     height: 32px;
                     border: 2px solid #f1f5f9;
-                    border-top: 2px solid #111827;
+                    border-top: 2px solid #000000;
                     border-radius: 50%;
                     animation: spin 0.8s linear infinite;
                 }
@@ -648,7 +648,7 @@ export default function AdminRequestsPage() {
                     font-family: var(--font-geist-sans);
                     font-size: 1.75rem;
                     font-weight: 600;
-                    color: #111827;
+                    color: #000000;
                     margin: 0 0 0.5rem 0;
                     letter-spacing: -0.02em;
                 }
@@ -680,7 +680,7 @@ export default function AdminRequestsPage() {
                 .modal-data {
                     font-size: 1.15rem;
                     font-weight: 600;
-                    color: #111827;
+                    color: #000000;
                 }
 
                 .modal-status {
@@ -718,7 +718,7 @@ export default function AdminRequestsPage() {
                 .ledger-btn-main.reject:hover { background: #fef2f2; border-color: #ef4444; }
 
                 .ledger-btn-main.approve {
-                    background: #111827;
+                    background: #000000;
                     border: none;
                     color: white;
                 }
