@@ -54,7 +54,7 @@ export default function IdeaTableRow({ idea, onEdit, onDelete, onAudit }: IdeaTa
     const handleChat = async () => {
         if (!user || user.id === idea.author_id) return;
 
-        const chatId = await getOrCreatePrivateChat(user.id, idea.author_id, idea.author_name);
+        const chatId = await getOrCreatePrivateChat(user.id, idea.author_id, idea.author_name, idea.id);
         if (chatId) {
             router.push(`/dashboard/messages?chatId=${chatId}`);
         }

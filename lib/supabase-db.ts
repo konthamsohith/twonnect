@@ -378,7 +378,7 @@ export const sendChatMessage = async (chatId: number, text: string, senderId: st
 /**
  * Gets an existing private chat or creates a new one.
  */
-export const getOrCreatePrivateChat = async (user1Id: string, user2Id: string, name2: string) => {
+export const getOrCreatePrivateChat = async (user1Id: string, user2Id: string, name2: string, ideaId?: string) => {
     if (!supabase) return null;
     try {
         // Use the RPC function we defined in the schema
@@ -392,9 +392,18 @@ export const getOrCreatePrivateChat = async (user1Id: string, user2Id: string, n
         }
 
         // Otherwise create a new chat
+        const { data: session } = await supabase.auth.getSession();
+        console.log("Current User Session inside getOrCreatePrivateChat:", session?.user?.id || "None (Anon)");
+
         const { data: newChat, error: createError } = await supabase
             .from("chats")
-            .insert([{ name: name2 || "Private Message", role: "Direct Message", tag: "co-founder", type: "dm" }])
+            .insert([{ 
+                name: name2 || "Private Message", 
+                role: "Direct Message", 
+                tag: "co-founder", 
+                type: "dm",
+                idea_id: ideaId
+            }])
             .select()
             .single();
 
@@ -639,7 +648,7 @@ export const updateCollaborationRequestStatus = async (requestId: number, status
                 if (ideaDetail && collabProfile) {
                     // Create exactly ONE DM for the pair. 
                     // The UI will handle displaying the correct name based on who is viewing.
-                    await getOrCreatePrivateChat(ideaDetail.author_id, request.user_id, collabProfile.full_name);
+                    await getOrCreatePrivateChat(ideaDetail.author_id, request.user_id, collabProfile.full_name, request.idea_id);
                 }
             }
         }
