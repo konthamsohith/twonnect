@@ -622,28 +622,37 @@ export const updateCollaborationRequestStatus = async (requestId: number, status
                         .select()
                         .single();
 
+                    if (chatError) throw chatError;
+
                     if (newChat) {
                         chatId = newChat.id;
                         // Add owner and first collaborator
-                        await supabase.from("chat_participants").insert([
+                        const { error: partError } = await supabase.from("chat_participants").insert([
                             { chat_id: chatId, user_id: idea?.author_id },
                             { chat_id: chatId, user_id: request.user_id }
                         ]);
+                        if (partError) throw partError;
                     }
                 } else {
                     chatId = existingChat.id;
                     // Add new collaborator to existing group
-                    await supabase.from("chat_participants").upsert({
+                    const { error: upsertError } = await supabase.from("chat_participants").upsert({
                         chat_id: chatId,
                         user_id: request.user_id
                     });
+                    if (upsertError) throw upsertError;
+
                     // Touch the chat to trigger real-time refresh for all participants
-                    await supabase.from("chats").update({ updated_at: new Date().toISOString() }).eq("id", chatId);
+                    const { error: touchError } = await supabase.from("chats").update({ updated_at: new Date().toISOString() }).eq("id", chatId);
+                    if (touchError) throw touchError;
                 }
 
                 // --- ALSO CREATE PRIVATE DM ---
-                const { data: ideaDetail } = await supabase.from("ideas").select("author_id, author_name").eq("id", request.idea_id).single();
-                const { data: collabProfile } = await supabase.from("profiles").select("full_name").eq("id", request.user_id).single();
+                const { data: ideaDetail, error: ideaErr } = await supabase.from("ideas").select("author_id, author_name").eq("id", request.idea_id).single();
+                if (ideaErr) throw ideaErr;
+
+                const { data: collabProfile, error: profileErr } = await supabase.from("profiles").select("full_name").eq("id", request.user_id).single();
+                if (profileErr) throw profileErr;
 
                 if (ideaDetail && collabProfile) {
                     // Create exactly ONE DM for the pair. 
