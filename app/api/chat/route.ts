@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const groq = new OpenAI({
-    apiKey: process.env.GROQ_API_KEY,
-    baseURL: "https://api.groq.com/openai/v1",
-});
-
 export async function POST(req: Request) {
     try {
         const { messages } = await req.json();
@@ -13,6 +8,11 @@ export async function POST(req: Request) {
         if (!process.env.GROQ_API_KEY || process.env.GROQ_API_KEY.includes("REPLACE")) {
             return NextResponse.json({ error: "API Key not configured" }, { status: 500 });
         }
+
+        const groq = new OpenAI({
+            apiKey: process.env.GROQ_API_KEY,
+            baseURL: "https://api.groq.com/openai/v1",
+        });
 
         const systemPrompt = `
 You are the TWONNECT Assistant, a helpful, intelligent, and concise AI companion for the user of the TWONNECT Platform.

@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const groq = new OpenAI({
-    apiKey: process.env.GROQ_API_KEY,
-    baseURL: "https://api.groq.com/openai/v1",
-});
-
 export async function POST(req: Request) {
     try {
         const { concept, history } = await req.json();
@@ -13,6 +8,11 @@ export async function POST(req: Request) {
         if (!process.env.GROQ_API_KEY || process.env.GROQ_API_KEY.includes("REPLACE")) {
             return NextResponse.json({ error: "API Key not configured" }, { status: 500 });
         }
+
+        const groq = new OpenAI({
+            apiKey: process.env.GROQ_API_KEY,
+            baseURL: "https://api.groq.com/openai/v1",
+        });
 
         const systemPrompt = `
 You are TWONNECT, an elite venture strategy auditor. Your goal is to provide deep, high-fidelity market research and disruption analysis.
